@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+//fixed username
 namespace Led_Strip_Controller
 {
     public partial class MainWindow : Form
