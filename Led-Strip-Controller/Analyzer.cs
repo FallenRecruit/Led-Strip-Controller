@@ -110,6 +110,30 @@ namespace Led_Strip_Controller
             }
         }
 
+        //Changeing input
+        public void ChangeInput()
+        {
+
+            var array = (_devicelist.Items[_devicelist.SelectedIndex] as string).Split(' ');
+            BassWasapi.BASS_WASAPI_Stop(true);
+            devindex = Convert.ToInt32(array[_devicelist.SelectedIndex]);
+            bool result = BassWasapi.BASS_WASAPI_Init(devindex, 0, 0, BASSWASAPIInit.BASS_WASAPI_BUFFER, 1f, 0.05f, _process, IntPtr.Zero);
+            if (!result)
+            {
+
+                var error = Bass.BASS_ErrorGetCode();
+                MessageBox.Show(error.ToString());
+            }
+            else
+            {
+                _initialized = true;
+                //_devicelist.Enabled = false;
+            }
+
+            BassWasapi.BASS_WASAPI_Start();
+
+        }
+
         // initialization
         private void Init()
         {

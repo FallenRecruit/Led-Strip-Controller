@@ -45,7 +45,7 @@ namespace Led_Strip_Controller
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            analyzer.ChangeInput();  
         }
     }
 }
