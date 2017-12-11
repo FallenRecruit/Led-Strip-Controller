@@ -212,7 +212,7 @@
             this.MainMenuStrip = this.mainMenuStrip;
             this.Name = "MainWindow";
             this.Text = "LED Controller";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
+            //this.Load += new System.EventHandler(this.MainWindow_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();

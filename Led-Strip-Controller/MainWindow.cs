@@ -23,29 +23,25 @@ namespace Led_Strip_Controller
             analyzer.Enable = true;
             analyzer.DisplayEnable = true;
             timer1.Enabled = true;
-        }
 
-        private void MainWindow_Load(object sender, EventArgs e)
-        {
-            
             string[] ports = SerialPort.GetPortNames();
-            foreach (string port in ports) {
+            foreach (string port in ports)
+            {
                 toolStripComboBoxCOMPort.Items.AddRange(new object[] { port });
             }
+            toolStripComboBoxCOMPort.SelectedIndex = 0;
         }
-
 
         private void Set()
         {
-            label1.ForeColor = Color.FromArgb(trackBar1.Value,trackBar2.Value ,trackBar3.Value  );
+            label1.ForeColor = Color.FromArgb(trackBar1.Value,trackBar2.Value ,trackBar3.Value );
         }
         
-
         private void trackBars(object sender, EventArgs e) {Set();}
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            analyzer.ChangeInput();  
+            //analyzer.ChangeInput();  
         }
     }
 }
