@@ -88,17 +88,18 @@ namespace Led_Strip_Controller
                     if (!_initialized)
                     {
                         var array = (_devicelist.Items[_devicelist.SelectedIndex] as string).Split(' ');
-                        devindex = Convert.ToInt32(array[0]);
+                        devindex = Convert.ToInt32(array[_devicelist.SelectedIndex]);
                         bool result = BassWasapi.BASS_WASAPI_Init(devindex, 0, 0, BASSWASAPIInit.BASS_WASAPI_BUFFER, 1f, 0.05f, _process, IntPtr.Zero);
                         if (!result)
                         {
+                            
                             var error = Bass.BASS_ErrorGetCode();
                             MessageBox.Show(error.ToString());
                         }
                         else
                         {
                             _initialized = true;
-                            _devicelist.Enabled = false;
+                            //_devicelist.Enabled = false;
                         }
                     }
                     BassWasapi.BASS_WASAPI_Start();

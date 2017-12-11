@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//fixed username
+
 namespace Led_Strip_Controller
 {
     public partial class MainWindow : Form
@@ -19,10 +19,7 @@ namespace Led_Strip_Controller
         {
             InitializeComponent();
 
-            analyzer = new Analyzer(progressBar1, progressBar2, null , comboBox1, chart1);
-            analyzer.Enable = true;
-            analyzer.DisplayEnable = true;
-            timer1.Enabled = true;
+            Set();
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -35,30 +32,32 @@ namespace Led_Strip_Controller
         }
 
 
-
-
-        
-
-
-
         private void Set()
         {
             label1.ForeColor = Color.FromArgb(trackBar1.Value,trackBar2.Value ,trackBar3.Value  );
+            if (analyzer == null)
+            {
+                analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, chart1);
+                analyzer.Enable = true;
+                analyzer.DisplayEnable = true;
+                timer1.Enabled = true;
+            }
+            else
+            {
+                analyzer = null;
+                analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, chart1);
+                analyzer.Enable = true;
+                analyzer.DisplayEnable = true;
+                timer1.Enabled = true;
+            }
+            
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            Set();
-        }
+        private void trackBars(object sender, EventArgs e) {Set();}
 
-        private void trackBar2_Scroll(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Set();
-        }
-
-        private void trackBar3_Scroll(object sender, EventArgs e)
-        {
-            Set();
+            //Set();
         }
     }
 }

@@ -120,7 +120,7 @@
             this.trackBar1.TabIndex = 1;
             this.trackBar1.TickFrequency = 0;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBars);
             // 
             // trackBar2
             // 
@@ -131,7 +131,7 @@
             this.trackBar2.TabIndex = 2;
             this.trackBar2.TickFrequency = 0;
             this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            this.trackBar2.Scroll += new System.EventHandler(this.trackBars);
             // 
             // trackBar3
             // 
@@ -142,7 +142,7 @@
             this.trackBar3.TabIndex = 3;
             this.trackBar3.TickFrequency = 0;
             this.trackBar3.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
+            this.trackBar3.Scroll += new System.EventHandler(this.trackBars);
             // 
             // label1
             // 
@@ -166,7 +166,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(421, 235);
+            this.chart1.Size = new System.Drawing.Size(666, 235);
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
             // 
@@ -187,10 +187,11 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(322, 172);
+            this.comboBox1.Location = new System.Drawing.Point(249, 174);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(300, 21);
             this.comboBox1.TabIndex = 8;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // MainWindow
             // 
