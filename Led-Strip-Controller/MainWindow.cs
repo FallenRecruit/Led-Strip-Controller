@@ -19,7 +19,10 @@ namespace Led_Strip_Controller
         {
             InitializeComponent();
 
-            Set();
+            analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, chart1);
+            analyzer.Enable = true;
+            analyzer.DisplayEnable = true;
+            timer1.Enabled = true;
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -35,29 +38,14 @@ namespace Led_Strip_Controller
         private void Set()
         {
             label1.ForeColor = Color.FromArgb(trackBar1.Value,trackBar2.Value ,trackBar3.Value  );
-            if (analyzer == null)
-            {
-                analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, chart1);
-                analyzer.Enable = true;
-                analyzer.DisplayEnable = true;
-                timer1.Enabled = true;
-            }
-            else
-            {
-                analyzer = null;
-                analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, chart1);
-                analyzer.Enable = true;
-                analyzer.DisplayEnable = true;
-                timer1.Enabled = true;
-            }
-            
         }
+        
 
         private void trackBars(object sender, EventArgs e) {Set();}
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Set();
+            
         }
     }
 }
