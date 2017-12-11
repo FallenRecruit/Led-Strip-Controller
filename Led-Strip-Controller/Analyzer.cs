@@ -52,21 +52,23 @@ namespace Led_Strip_Controller
             _devicelist = devicelist;
             _initialized = false;
 
-            chart.Series.Add("wave");
-            chart.Series["wave"].ChartType = SeriesChartType.FastLine;
-            chart.Series["wave"].ChartArea = "ChartArea1";
-
-            chart.ChartAreas["ChartArea1"].AxisX.MajorGrid.Enabled = false;
-            chart.ChartAreas["ChartArea1"].AxisY.MajorGrid.Enabled = false;
-            chart.ChartAreas["ChartArea1"].AxisY.Maximum = 255;
-            chart.ChartAreas["ChartArea1"].AxisY.Minimum = 0;
-            chart.ChartAreas["ChartArea1"].AxisX.Maximum = 64;
-            chart.ChartAreas["ChartArea1"].AxisX.Minimum = 0;
-            for (int i = 0; i < chart.ChartAreas["ChartArea1"].AxisX.Maximum; i++)
+            if (chart != null)
             {
-                chart.Series["wave"].Points.Add(0);
-            }
+                chart.Series.Add("wave");
+                chart.Series["wave"].ChartType = SeriesChartType.FastLine;
+                chart.Series["wave"].ChartArea = "ChartArea1";
 
+                chart.ChartAreas["ChartArea1"].AxisX.MajorGrid.Enabled = false;
+                chart.ChartAreas["ChartArea1"].AxisY.MajorGrid.Enabled = false;
+                chart.ChartAreas["ChartArea1"].AxisY.Maximum = 255;
+                chart.ChartAreas["ChartArea1"].AxisY.Minimum = 0;
+                chart.ChartAreas["ChartArea1"].AxisX.Maximum = 64;
+                chart.ChartAreas["ChartArea1"].AxisX.Minimum = 0;
+                for (int i = 0; i < chart.ChartAreas["ChartArea1"].AxisX.Maximum; i++)
+                {
+                    chart.Series["wave"].Points.Add(0);
+                }
+            }
             Init();
         }
 
@@ -87,8 +89,8 @@ namespace Led_Strip_Controller
                 {
                     if (!_initialized)
                     {
-                        var array = (_devicelist.Items[_devicelist.SelectedIndex] as string).Split(' ');
-                        devindex = Convert.ToInt32(array[_devicelist.SelectedIndex]);
+                        var array = (_devicelist.Items[3] as string).Split(' ');
+                        devindex = Convert.ToInt32(array[0]);
                         bool result = BassWasapi.BASS_WASAPI_Init(devindex, 0, 0, BASSWASAPIInit.BASS_WASAPI_BUFFER, 1f, 0.05f, _process, IntPtr.Zero);
                         if (!result)
                         {

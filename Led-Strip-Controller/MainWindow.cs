@@ -19,7 +19,7 @@ namespace Led_Strip_Controller
         {
             InitializeComponent();
 
-            analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, chart1);
+            analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, null);
             analyzer.Enable = true;
             analyzer.DisplayEnable = true;
             timer1.Enabled = true;
@@ -35,6 +35,7 @@ namespace Led_Strip_Controller
         private void Set()
         {
             label1.ForeColor = Color.FromArgb(trackBar1.Value,trackBar2.Value ,trackBar3.Value );
+            
         }
         
         private void trackBars(object sender, EventArgs e) {Set();}
