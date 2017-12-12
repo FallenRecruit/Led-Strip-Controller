@@ -18,7 +18,10 @@ namespace Led_Strip_Controller
 
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-        int devIndex = Convert.ToInt32(ConfigurationManager.AppSettings["device"]);
+        int _devIndex = Convert.ToInt32(ConfigurationManager.AppSettings["device"]);
+        int _fixR = Convert.ToInt32(ConfigurationManager.AppSettings["FixedR"]);
+        int _fixG = Convert.ToInt32(ConfigurationManager.AppSettings["FixedG"]);
+        int _fixB = Convert.ToInt32(ConfigurationManager.AppSettings["FixedB"]);
 
         public MainWindow()
         {
@@ -26,10 +29,15 @@ namespace Led_Strip_Controller
 
             sliderAmp.Maximum = (ushort.MaxValue);
 
-            analyzer = new Analyzer(barL, barR, null, comboBoxDevice, null, sliderMult, devIndex);
+            analyzer = new Analyzer(barL, barR, null, comboBoxDevice, null, sliderMult, _devIndex);
             analyzer.Enable = true;
             analyzer.DisplayEnable = true;
             timer1.Enabled = true;
+
+            sliderR.Value = _fixR;
+            sliderG.Value = _fixG;
+            sliderB.Value = _fixB;
+            setFixed();
 
             string[] ports = SerialPort.GetPortNames();
             foreach (string port in ports)
@@ -39,21 +47,28 @@ namespace Led_Strip_Controller
             toolStripComboBoxCOMPort.SelectedIndex = 0;
         }
 
-        private void Set()
+        private void setFixed()
         {
             fixedColor.ForeColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
-
         }
 
-        private void trackBars(object sender, EventArgs e) { Set(); }
+        private void trackBars(object sender, EventArgs e) { setFixed(); }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxDev_SelIndChanged(object sender, EventArgs e)
+        {
+            saveSettings();
+
+            //analyzer.ChangeInput();  
+        }
+
+        private void saveSettings()
         {
             config.AppSettings.Settings.Clear();
             config.AppSettings.Settings.Add("Device", comboBoxDevice.SelectedIndex.ToString());
+            config.AppSettings.Settings.Add("FixedR", sliderR.Value.ToString());
+            config.AppSettings.Settings.Add("FixedG", sliderG.Value.ToString());
+            config.AppSettings.Settings.Add("FixedB", sliderB.Value.ToString());
             config.Save(ConfigurationSaveMode.Minimal);
-
-            //analyzer.ChangeInput();  
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -62,8 +77,20 @@ namespace Led_Strip_Controller
             slider();
         }
 
+        /// <summary>
+        /// Convert HSV to RGB
+        /// h is from 0-360
+        /// s,v values are 0-1
+        /// r,g,b values are 0-255
+        /// Based upon http://ilab.usc.edu/wiki/index.php/HSV_And_H2SV_Color_Space#HSV_Transformation_C_.2F_C.2B.2B_Code_2
+        /// </summary>
         void HsvToRgb(double h, double S, double V, out int r, out int g, out int b)
         {
+            // ######################################################################
+            // T. Nathan Mundhenk
+            // mundhenk@usc.edu
+            // C/C++ Macro HSV to RGB
+
             double H = h;
             while (H < 0) { H += 360; };
             while (H >= 360) { H -= 360; };

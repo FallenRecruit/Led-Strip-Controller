@@ -192,7 +192,7 @@
             this.comboBoxDevice.Name = "comboBoxDevice";
             this.comboBoxDevice.Size = new System.Drawing.Size(300, 21);
             this.comboBoxDevice.TabIndex = 8;
-            this.comboBoxDevice.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBoxDevice.SelectedIndexChanged += new System.EventHandler(this.comboBoxDev_SelIndChanged);
             // 
             // timer1
             // 
