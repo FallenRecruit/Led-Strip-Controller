@@ -28,15 +28,14 @@ namespace Led_Strip_Controller
 
             sliderAmp.Maximum = (ushort.MaxValue);
 
-            analyzer = new Analyzer(barL, barR, comboBoxDevice, sliderMult, _devIndex);
-            analyzer.Enable = true;
-            analyzer.DisplayEnable = true;
+            analyzer = new Analyzer(barL, barR, comboBoxDevice, sliderMult, _devIndex)
+            {Enable = true, DisplayEnable = true};
             tickTimer.Enabled = true;
 
             sliderR.Value = _fixR;
             sliderG.Value = _fixG;
             sliderB.Value = _fixB;
-            setFixed();
+            SetFixed();
 
             string[] ports = SerialPort.GetPortNames();
             foreach (string port in ports)
@@ -46,21 +45,7 @@ namespace Led_Strip_Controller
             toolStripComboBoxCOMPort.SelectedIndex = 0;
         }
 
-        private void setFixed()
-        {
-            fixedColor.ForeColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
-        }
-
-        private void rgbBars(object sender, EventArgs e) { setFixed(); }
-
-        private void comboBoxDev_SelIndChanged(object sender, EventArgs e)
-        {
-            saveSettings();
-
-            //analyzer.ChangeInput();  
-        }
-
-        private void saveSettings()
+        private void SaveSettings()
         {
             config.AppSettings.Settings.Clear();
             config.AppSettings.Settings.Add("Device", comboBoxDevice.SelectedIndex.ToString());
@@ -70,10 +55,46 @@ namespace Led_Strip_Controller
             config.Save(ConfigurationSaveMode.Minimal);
         }
 
-        private void eventTick(object sender, EventArgs e)
+        float Map(float val, float inMin, float inMax, float outMin, float outMax)
         {
-            try { sliderAmp.Value = analyzer.outlev(); sliderAmp.BackColor = Color.FromArgb(64,64,64); } catch { sliderAmp.BackColor = Color.Red; }
-            slider();
+            return outMin + (val - inMin) * (outMax - outMin) / (inMax - inMin);
+        }
+
+        private void CheckClick(object sender, EventArgs e)
+        {
+            checkFixed.Checked = !checkFixed.Checked;
+            checkAudio.Checked = !checkAudio.Checked;
+
+        }
+
+        /// <summary>
+        /// Code for Fixed color pannel
+        /// </summary>
+        /// <param name="Fixed color"></param>
+
+        private void SetFixed()
+        {
+            fixedColor.BackColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
+        }
+
+        private void RgbBars(object sender, EventArgs e) { SetFixed(); }
+
+        /// <summary>
+        /// Code for Audio react pannel
+        /// </summary>
+        /// <param name="Audio react"></param>
+
+        private void ComboBoxDev_SelIndChanged(object sender, EventArgs e)
+        {
+            SaveSettings();
+
+            //analyzer.ChangeInput();  
+        }
+
+        private void EventTick(object sender, EventArgs e)
+        {
+            try { sliderAmp.Value = analyzer.Outlev(); sliderAmp.BackColor = Color.White; } catch { sliderAmp.BackColor = Color.Red; }
+            Slider();
         }
 
         /// <summary>
@@ -189,30 +210,39 @@ namespace Led_Strip_Controller
             return i;
         }
 
-        float map(float val, float inMin, float inMax, float outMin, float outMax)
-        {
-            return outMin + (val - inMin) * (outMax - outMin) / (inMax - inMin);
-        }
+        private void Hsv(object sender, EventArgs e) { Slider(); }
 
-        private void hsv(object sender, EventArgs e) { slider(); }
-
-        private void slider()
+        private void Slider()
         {
-            int red = 0;
-            int green = 0;
-            int blue = 0;
-            double hue = map(sliderAmp.Value,0, ushort.MaxValue,0,360);
+            double hue = Map(sliderAmp.Value, 0, ushort.MaxValue, 0, 360);
             double sat = (double)sliderBri.Value / 100;
-            HsvToRgb(hue, sat, 1.0, out red,  out green, out blue);
+            HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
-            audioColor.ForeColor = Color.FromArgb(red, green, blue);
+            audioColor.BackColor = Color.FromArgb(red, green, blue);
         }
 
-        private void checkClick(object sender, EventArgs e)
-        {
-            checkFixed.Checked = !checkFixed.Checked;
-            checkAudio.Checked = !checkAudio.Checked;
+        /// <summary>
+        /// Code for custom pattern pannel
+        /// </summary>
+        /// <param name="Custom Pattern"></param>
 
+        private void CustomPattern0_Click(object sender, EventArgs e) {ColorSelect(customPattern0);}
+        private void CustomPattern1_Click(object sender, EventArgs e) {ColorSelect(customPattern1);}
+        private void CustomPattern2_Click(object sender, EventArgs e) {ColorSelect(customPattern2);}
+        private void CustomPattern3_Click(object sender, EventArgs e) {ColorSelect(customPattern3);}
+        private void CustomPattern4_Click(object sender, EventArgs e) {ColorSelect(customPattern4);}
+        private void CustomPattern5_Click(object sender, EventArgs e) {ColorSelect(customPattern5);}
+        private void CustomPattern6_Click(object sender, EventArgs e) {ColorSelect(customPattern6);}
+
+        private void ColorSelect(PictureBox pan)
+        {
+            ColorDialog MyDialog = new ColorDialog
+            {
+                Color = pan.BackColor
+            };
+
+            if (MyDialog.ShowDialog() == DialogResult.OK)
+                pan.BackColor = MyDialog.Color;
         }
     }
 }

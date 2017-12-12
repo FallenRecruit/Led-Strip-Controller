@@ -174,7 +174,7 @@ namespace Led_Strip_Controller
 
         }
 
-        public int outlev()
+        public int Outlev()
         {
             int lev = 0;
             int r = 0;
