@@ -232,6 +232,8 @@
             // 
             // trackBar5
             // 
+            this.trackBar5.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.trackBar5.Enabled = false;
             this.trackBar5.Location = new System.Drawing.Point(0, 274);
             this.trackBar5.Name = "trackBar5";
             this.trackBar5.Size = new System.Drawing.Size(380, 45);

@@ -25,13 +25,14 @@ namespace Led_Strip_Controller
         private ComboBox _devicelist;       //device list
         private bool _initialized;          //initialized flag
         private int devindex;               //used device index
+        private int _deviceindex;
         private Chart _chart;
         private TrackBar _m;
 
         private int _lines = 64;            // number of spectrum lines
 
         //ctor
-        public Analyzer(ProgressBar left, ProgressBar right, Spectrum spectrum, ComboBox devicelist, Chart chart, TrackBar multiplyer)
+        public Analyzer(ProgressBar left, ProgressBar right, Spectrum spectrum, ComboBox devicelist, Chart chart, TrackBar multiplyer, int deviceindex)
         {
             _m = multiplyer;
             _m.Minimum = 1;
@@ -55,6 +56,7 @@ namespace Led_Strip_Controller
             _chart = chart;
             _devicelist = devicelist;
             _initialized = false;
+            _deviceindex = deviceindex;
 
             if (chart != null)
             {
@@ -93,7 +95,8 @@ namespace Led_Strip_Controller
                 {
                     if (!_initialized)
                     {
-                        var array = (_devicelist.Items[3] as string).Split(' ');
+                        var array = (_devicelist.Items[_deviceindex] as string).Split(' ');
+                        _devicelist.SelectedIndex = _deviceindex;
                         devindex = Convert.ToInt32(array[0]);
                         bool result = BassWasapi.BASS_WASAPI_Init(devindex, 0, 0, BASSWASAPIInit.BASS_WASAPI_BUFFER, 1f, 0.05f, _process, IntPtr.Zero);
                         if (!result)
