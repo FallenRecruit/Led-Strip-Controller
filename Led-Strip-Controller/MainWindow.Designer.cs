@@ -445,7 +445,7 @@
             this.customPattern6.Size = new System.Drawing.Size(60, 60);
             this.customPattern6.TabIndex = 37;
             this.customPattern6.TabStop = false;
-            this.customPattern6.Click += new System.EventHandler(this.CustomPattern6_Click);
+            this.customPattern6.Click += new System.EventHandler(this.CustomPattern_Click);
             // 
             // customPattern5
             // 
@@ -456,7 +456,7 @@
             this.customPattern5.Size = new System.Drawing.Size(60, 60);
             this.customPattern5.TabIndex = 36;
             this.customPattern5.TabStop = false;
-            this.customPattern5.Click += new System.EventHandler(this.CustomPattern5_Click);
+            this.customPattern5.Click += new System.EventHandler(this.CustomPattern_Click);
             // 
             // customPattern4
             // 
@@ -467,7 +467,7 @@
             this.customPattern4.Size = new System.Drawing.Size(60, 60);
             this.customPattern4.TabIndex = 35;
             this.customPattern4.TabStop = false;
-            this.customPattern4.Click += new System.EventHandler(this.CustomPattern4_Click);
+            this.customPattern4.Click += new System.EventHandler(this.CustomPattern_Click);
             // 
             // customPattern3
             // 
@@ -478,7 +478,7 @@
             this.customPattern3.Size = new System.Drawing.Size(60, 60);
             this.customPattern3.TabIndex = 34;
             this.customPattern3.TabStop = false;
-            this.customPattern3.Click += new System.EventHandler(this.CustomPattern3_Click);
+            this.customPattern3.Click += new System.EventHandler(this.CustomPattern_Click);
             // 
             // customPattern2
             // 
@@ -489,7 +489,7 @@
             this.customPattern2.Size = new System.Drawing.Size(60, 60);
             this.customPattern2.TabIndex = 33;
             this.customPattern2.TabStop = false;
-            this.customPattern2.Click += new System.EventHandler(this.CustomPattern2_Click);
+            this.customPattern2.Click += new System.EventHandler(this.CustomPattern_Click);
             // 
             // customPattern1
             // 
@@ -500,7 +500,7 @@
             this.customPattern1.Size = new System.Drawing.Size(60, 60);
             this.customPattern1.TabIndex = 32;
             this.customPattern1.TabStop = false;
-            this.customPattern1.Click += new System.EventHandler(this.CustomPattern1_Click);
+            this.customPattern1.Click += new System.EventHandler(this.CustomPattern_Click);
             // 
             // customPattern0
             // 
@@ -511,8 +511,8 @@
             this.customPattern0.Size = new System.Drawing.Size(60, 60);
             this.customPattern0.TabIndex = 31;
             this.customPattern0.TabStop = false;
-            this.customPattern0.Click += new System.EventHandler(this.CustomPattern0_Click);
-            // 
+            this.customPattern0.Click += new System.EventHandler(this.CustomPattern_Click);
+            //
             // checkBox8
             // 
             this.checkBox8.AutoSize = true;

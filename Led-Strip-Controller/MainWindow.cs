@@ -226,13 +226,11 @@ namespace Led_Strip_Controller
         /// </summary>
         /// <param name="Custom Pattern"></param>
 
-        private void CustomPattern0_Click(object sender, EventArgs e) {ColorSelect(customPattern0);}
-        private void CustomPattern1_Click(object sender, EventArgs e) {ColorSelect(customPattern1);}
-        private void CustomPattern2_Click(object sender, EventArgs e) {ColorSelect(customPattern2);}
-        private void CustomPattern3_Click(object sender, EventArgs e) {ColorSelect(customPattern3);}
-        private void CustomPattern4_Click(object sender, EventArgs e) {ColorSelect(customPattern4);}
-        private void CustomPattern5_Click(object sender, EventArgs e) {ColorSelect(customPattern5);}
-        private void CustomPattern6_Click(object sender, EventArgs e) {ColorSelect(customPattern6);}
+        private void CustomPattern_Click(object sender, EventArgs e)
+        {
+            PictureBox pan = sender as PictureBox;
+            ColorSelect(pan);
+        }
 
         private void ColorSelect(PictureBox pan)
         {
