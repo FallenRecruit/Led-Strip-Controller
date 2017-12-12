@@ -9,12 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace Led_Strip_Controller
 {
     public partial class MainWindow : Form
     {
         Analyzer analyzer;
+
+        bool loaded = false;
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
         int _devIndex = Convert.ToInt32(ConfigurationManager.AppSettings["device"]);
@@ -36,13 +39,18 @@ namespace Led_Strip_Controller
             sliderG.Value = _fixG;
             sliderB.Value = _fixB;
             SetFixed();
-
-            string[] ports = SerialPort.GetPortNames();
-            foreach (string port in ports)
+            try
             {
-                toolStripComboBoxCOMPort.Items.AddRange(new object[] { port });
+                string[] ports = SerialPort.GetPortNames();
+                foreach (string port in ports)
+                {
+                    toolStripComboBoxCOMPort.Items.AddRange(new object[] { port });
+                }
+                toolStripComboBoxCOMPort.SelectedIndex = 0;
             }
-            toolStripComboBoxCOMPort.SelectedIndex = 0;
+            catch { }
+
+            loaded = true;
         }
 
         private void SaveSettings()
@@ -87,7 +95,18 @@ namespace Led_Strip_Controller
         private void ComboBoxDev_SelIndChanged(object sender, EventArgs e)
         {
             SaveSettings();
+            if (loaded)
+            {
+                DialogResult dialogResult = MessageBox.Show("Program needs to restart to change audio device, would you like to restart",
+                    "Restart me?", MessageBoxButtons.YesNo);
 
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Process.Start(AppDomain.CurrentDomain.FriendlyName);
+                    Application.Exit();
+                }
+                else if (dialogResult == DialogResult.No) {/*do nothing*/}
+            }
             //analyzer.ChangeInput();  
         }
 
