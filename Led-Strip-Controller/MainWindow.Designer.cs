@@ -44,7 +44,7 @@
             this.barL = new System.Windows.Forms.ProgressBar();
             this.barR = new System.Windows.Forms.ProgressBar();
             this.comboBoxDevice = new System.Windows.Forms.ComboBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tickTimer = new System.Windows.Forms.Timer(this.components);
             this.sliderMult = new System.Windows.Forms.TrackBar();
             this.labelRed = new System.Windows.Forms.Label();
             this.labelGreen = new System.Windows.Forms.Label();
@@ -133,7 +133,7 @@
             this.sliderR.TickFrequency = 0;
             this.sliderR.TickStyle = System.Windows.Forms.TickStyle.None;
             this.sliderR.Value = 255;
-            this.sliderR.Scroll += new System.EventHandler(this.trackBars);
+            this.sliderR.Scroll += new System.EventHandler(this.rgbBars);
             // 
             // sliderG
             // 
@@ -144,7 +144,7 @@
             this.sliderG.TabIndex = 2;
             this.sliderG.TickFrequency = 0;
             this.sliderG.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.sliderG.Scroll += new System.EventHandler(this.trackBars);
+            this.sliderG.Scroll += new System.EventHandler(this.rgbBars);
             // 
             // sliderB
             // 
@@ -155,7 +155,7 @@
             this.sliderB.TabIndex = 3;
             this.sliderB.TickFrequency = 0;
             this.sliderB.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.sliderB.Scroll += new System.EventHandler(this.trackBars);
+            this.sliderB.Scroll += new System.EventHandler(this.rgbBars);
             // 
             // fixedColor
             // 
@@ -194,9 +194,9 @@
             this.comboBoxDevice.TabIndex = 8;
             this.comboBoxDevice.SelectedIndexChanged += new System.EventHandler(this.comboBoxDev_SelIndChanged);
             // 
-            // timer1
+            // tickTimer
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.tickTimer.Tick += new System.EventHandler(this.eventTick);
             // 
             // sliderMult
             // 
@@ -400,7 +400,7 @@
         private System.Windows.Forms.ProgressBar barL;
         private System.Windows.Forms.ProgressBar barR;
         private System.Windows.Forms.ComboBox comboBoxDevice;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer tickTimer;
         private System.Windows.Forms.TrackBar sliderMult;
         private System.Windows.Forms.Label labelRed;
         private System.Windows.Forms.Label labelGreen;

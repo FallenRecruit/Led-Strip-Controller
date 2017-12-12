@@ -16,7 +16,6 @@ namespace Led_Strip_Controller
     {
         Analyzer analyzer;
 
-
         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
         int _devIndex = Convert.ToInt32(ConfigurationManager.AppSettings["device"]);
         int _fixR = Convert.ToInt32(ConfigurationManager.AppSettings["FixedR"]);
@@ -32,7 +31,7 @@ namespace Led_Strip_Controller
             analyzer = new Analyzer(barL, barR, null, comboBoxDevice, null, sliderMult, _devIndex);
             analyzer.Enable = true;
             analyzer.DisplayEnable = true;
-            timer1.Enabled = true;
+            tickTimer.Enabled = true;
 
             sliderR.Value = _fixR;
             sliderG.Value = _fixG;
@@ -52,7 +51,7 @@ namespace Led_Strip_Controller
             fixedColor.ForeColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
         }
 
-        private void trackBars(object sender, EventArgs e) { setFixed(); }
+        private void rgbBars(object sender, EventArgs e) { setFixed(); }
 
         private void comboBoxDev_SelIndChanged(object sender, EventArgs e)
         {
@@ -71,7 +70,7 @@ namespace Led_Strip_Controller
             config.Save(ConfigurationSaveMode.Minimal);
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void eventTick(object sender, EventArgs e)
         {
             try { sliderAmp.Value = analyzer.outlev(); sliderAmp.BackColor = Color.FromArgb(64,64,64); } catch (Exception g) { sliderAmp.BackColor = Color.Red; }
             slider();
@@ -80,7 +79,7 @@ namespace Led_Strip_Controller
         /// <summary>
         /// Convert HSV to RGB
         /// h is from 0-360
-        /// s,v values are 0-1
+        /// s,v values are 0.0-1.0
         /// r,g,b values are 0-255
         /// Based upon http://ilab.usc.edu/wiki/index.php/HSV_And_H2SV_Color_Space#HSV_Transformation_C_.2F_C.2B.2B_Code_2
         /// </summary>
@@ -190,9 +189,9 @@ namespace Led_Strip_Controller
             return i;
         }
 
-        float map(float s, float a1, float a2, float b1, float b2)
+        float map(float val, float inMin, float inMax, float outMin, float outMax)
         {
-            return b1 + (s - a1) * (b2 - b1) / (a2 - a1);
+            return outMin + (val - inMin) * (outMax - outMin) / (inMax - inMin);
         }
 
         private void hsv(object sender, EventArgs e) { slider(); }
