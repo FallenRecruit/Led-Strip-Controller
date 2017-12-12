@@ -28,7 +28,7 @@ namespace Led_Strip_Controller
 
             sliderAmp.Maximum = (ushort.MaxValue);
 
-            analyzer = new Analyzer(barL, barR, null, comboBoxDevice, null, sliderMult, _devIndex);
+            analyzer = new Analyzer(barL, barR, comboBoxDevice, sliderMult, _devIndex);
             analyzer.Enable = true;
             analyzer.DisplayEnable = true;
             tickTimer.Enabled = true;
@@ -72,7 +72,7 @@ namespace Led_Strip_Controller
 
         private void eventTick(object sender, EventArgs e)
         {
-            try { sliderAmp.Value = analyzer.outlev(); sliderAmp.BackColor = Color.FromArgb(64,64,64); } catch (Exception g) { sliderAmp.BackColor = Color.Red; }
+            try { sliderAmp.Value = analyzer.outlev(); sliderAmp.BackColor = Color.FromArgb(64,64,64); } catch { sliderAmp.BackColor = Color.Red; }
             slider();
         }
 
