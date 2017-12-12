@@ -66,9 +66,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Spectrum.xaml.cs">
-      <DependentUpon>Spectrum.xaml</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,12 +106,6 @@
     <Content Include="Icos\Rainbow_icon32.ico" />
     <Content Include="Icos\Rainbow_icon64.ico" />
     <Content Include="palette.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Spectrum.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
