@@ -26,12 +26,16 @@ namespace Led_Strip_Controller
         private bool _initialized;          //initialized flag
         private int devindex;               //used device index
         private Chart _chart;
+        private TrackBar _m;
 
         private int _lines = 64;            // number of spectrum lines
 
         //ctor
-        public Analyzer(ProgressBar left, ProgressBar right, Spectrum spectrum, ComboBox devicelist, Chart chart)
+        public Analyzer(ProgressBar left, ProgressBar right, Spectrum spectrum, ComboBox devicelist, Chart chart, TrackBar multiplyer)
         {
+            _m = multiplyer;
+            _m.Minimum = 1;
+            _m.Maximum = 10;
             _fft = new float[8192];
             _lastlevel = 0;
             _hanctr = 0;
@@ -205,8 +209,17 @@ namespace Led_Strip_Controller
 
 
             int level = BassWasapi.BASS_WASAPI_GetLevel();
-            _l.Value = (Utils.LowWord32(level));
-            _r.Value = (Utils.HighWord32(level));
+            int multi = _m.Value;
+            try
+            {
+                _l.Value = (Utils.LowWord32(level)) * multi;
+                _r.Value = (Utils.HighWord32(level)) * multi;
+            }
+            catch
+            {
+
+            }
+            
             if (level == _lastlevel && level != 0) _hanctr++;
             _lastlevel = level;
 
@@ -223,6 +236,28 @@ namespace Led_Strip_Controller
                 Enable = true;
             }
 
+        }
+
+        public int outlev()
+        {
+            int lev = 0;
+            int r = 0;
+            int l = 0;
+            int level = BassWasapi.BASS_WASAPI_GetLevel();
+            int multi = _m.Value;
+            try
+            {
+                l = (Utils.LowWord32(level)) * multi;
+                r = (Utils.HighWord32(level)) * multi;
+            }
+            catch
+            {
+
+            }
+
+            lev = (l + r) / 2;
+
+            return lev;
         }
 
         // WASAPI callback, required for continuous recording

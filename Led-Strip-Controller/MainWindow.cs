@@ -19,7 +19,9 @@ namespace Led_Strip_Controller
         {
             InitializeComponent();
 
-            analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, null);
+            trackBar5.Maximum = (ushort.MaxValue);
+
+            analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, null, trackBar4);
             analyzer.Enable = true;
             analyzer.DisplayEnable = true;
             timer1.Enabled = true;
@@ -44,5 +46,11 @@ namespace Led_Strip_Controller
         {
             //analyzer.ChangeInput();  
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try{trackBar5.Value = analyzer.outlev();} catch { }
+        }
+
     }
 }
