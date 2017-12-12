@@ -24,9 +24,9 @@ namespace Led_Strip_Controller
         {
             InitializeComponent();
 
-            trackBar5.Maximum = (ushort.MaxValue);
+            sliderAmp.Maximum = (ushort.MaxValue);
 
-            analyzer = new Analyzer(progressBar1, progressBar2, null, comboBox1, null, trackBar4, devIndex);
+            analyzer = new Analyzer(barL, barR, null, comboBoxDevice, null, sliderMult, devIndex);
             analyzer.Enable = true;
             analyzer.DisplayEnable = true;
             timer1.Enabled = true;
@@ -41,25 +41,152 @@ namespace Led_Strip_Controller
 
         private void Set()
         {
-            label1.ForeColor = Color.FromArgb(trackBar1.Value,trackBar2.Value ,trackBar3.Value );
-            
+            fixedColor.ForeColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
+
         }
-        
-        private void trackBars(object sender, EventArgs e) {Set();}
+
+        private void trackBars(object sender, EventArgs e) { Set(); }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             config.AppSettings.Settings.Clear();
-            config.AppSettings.Settings.Add("Device", comboBox1.SelectedIndex.ToString());
+            config.AppSettings.Settings.Add("Device", comboBoxDevice.SelectedIndex.ToString());
             config.Save(ConfigurationSaveMode.Minimal);
-            
+
             //analyzer.ChangeInput();  
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            try{trackBar5.Value = analyzer.outlev(); trackBar5.BackColor = Color.White; } catch (Exception g){ trackBar5.BackColor = Color.Red; }
+            try { sliderAmp.Value = analyzer.outlev(); sliderAmp.BackColor = Color.FromArgb(64,64,64); } catch (Exception g) { sliderAmp.BackColor = Color.Red; }
+            slider();
         }
 
+        void HsvToRgb(double h, double S, double V, out int r, out int g, out int b)
+        {
+            double H = h;
+            while (H < 0) { H += 360; };
+            while (H >= 360) { H -= 360; };
+            double R, G, B;
+            if (V <= 0)
+            { R = G = B = 0; }
+            else if (S <= 0)
+            {
+                R = G = B = V;
+            }
+            else
+            {
+                double hf = H / 60.0;
+                int i = (int)Math.Floor(hf);
+                double f = hf - i;
+                double pv = V * (1 - S);
+                double qv = V * (1 - S * f);
+                double tv = V * (1 - S * (1 - f));
+                switch (i)
+                {
+
+                    // Red is the dominant color
+
+                    case 0:
+                        R = V;
+                        G = tv;
+                        B = pv;
+                        break;
+
+                    // Green is the dominant color
+
+                    case 1:
+                        R = qv;
+                        G = V;
+                        B = pv;
+                        break;
+                    case 2:
+                        R = pv;
+                        G = V;
+                        B = tv;
+                        break;
+
+                    // Blue is the dominant color
+
+                    case 3:
+                        R = pv;
+                        G = qv;
+                        B = V;
+                        break;
+                    case 4:
+                        R = tv;
+                        G = pv;
+                        B = V;
+                        break;
+
+                    // Red is the dominant color
+
+                    case 5:
+                        R = V;
+                        G = pv;
+                        B = qv;
+                        break;
+
+                    // Just in case we overshoot on our math by a little, we put these here. Since its a switch it won't slow us down at all to put these here.
+
+                    case 6:
+                        R = V;
+                        G = tv;
+                        B = pv;
+                        break;
+                    case -1:
+                        R = V;
+                        G = pv;
+                        B = qv;
+                        break;
+
+                    // The color is not defined, we should throw an error.
+
+                    default:
+                        //LFATAL("i Value error in Pixel conversion, Value is %d", i);
+                        R = G = B = V; // Just pretend its black/white
+                        break;
+                }
+            }
+            r = Clamp((int)(R * 255.0));
+            g = Clamp((int)(G * 255.0));
+            b = Clamp((int)(B * 255.0));
+        }
+
+        /// <summary>
+        /// Clamp a value to 0-255
+        /// </summary>
+        int Clamp(int i)
+        {
+            if (i < 0) return 0;
+            if (i > 255) return 255;
+            return i;
+        }
+
+        float map(float s, float a1, float a2, float b1, float b2)
+        {
+            return b1 + (s - a1) * (b2 - b1) / (a2 - a1);
+        }
+
+        private void hsv(object sender, EventArgs e) { slider(); }
+
+        private void slider()
+        {
+            int red = 0;
+            int green = 0;
+            int blue = 0;
+            double hue = map(sliderAmp.Value,0, ushort.MaxValue,0,360);
+            double sat = (double)sliderBri.Value / 100;
+            HsvToRgb(hue, sat, 1.0, out red,  out green, out blue);
+
+            audioColor.ForeColor = Color.FromArgb(red, green, blue);
+        }
+
+        private void checkClick(object sender, EventArgs e)
+        {
+            checkFixed.Checked = !checkFixed.Checked;
+            checkAudio.Checked = !checkAudio.Checked;
+
+        }
     }
 }

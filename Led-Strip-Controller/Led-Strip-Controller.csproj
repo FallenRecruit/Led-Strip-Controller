@@ -108,6 +108,7 @@
     <Content Include="Icos\Rainbow_icon16.ico" />
     <Content Include="Icos\Rainbow_icon32.ico" />
     <Content Include="Icos\Rainbow_icon64.ico" />
+    <Content Include="palette.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Spectrum.xaml">
