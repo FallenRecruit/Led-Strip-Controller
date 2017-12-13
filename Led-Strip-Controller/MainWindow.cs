@@ -102,7 +102,6 @@ namespace Led_Strip_Controller
                 clicked.Checked = true;
             }
             catch { }
-            
 
             if (clicked == checkFixed)
             {
