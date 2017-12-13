@@ -404,7 +404,6 @@
             this.audioColor.Name = "audioColor";
             this.audioColor.Size = new System.Drawing.Size(125, 125);
             this.audioColor.TabIndex = 24;
-            this.audioColor.BackColorChanged += new System.EventHandler(this.CheckClick);
             // 
             // sliderOffset
             // 
@@ -441,7 +440,6 @@
             this.fixedColor.Name = "fixedColor";
             this.fixedColor.Size = new System.Drawing.Size(125, 125);
             this.fixedColor.TabIndex = 23;
-            this.fixedColor.BackColorChanged += new System.EventHandler(this.ColorChanged);
             // 
             // panel3
             // 
@@ -577,7 +575,6 @@
             this.customColor.Name = "customColor";
             this.customColor.Size = new System.Drawing.Size(125, 125);
             this.customColor.TabIndex = 24;
-            this.customColor.BackColorChanged += new System.EventHandler(this.CheckClick);
             // 
             // comboBox1
             // 
@@ -730,7 +727,6 @@
             this.fadeColor.Name = "fadeColor";
             this.fadeColor.Size = new System.Drawing.Size(125, 125);
             this.fadeColor.TabIndex = 23;
-            this.fadeColor.BackColorChanged += new System.EventHandler(this.ColorChanged);
             // 
             // checkFade
             // 
@@ -782,8 +778,12 @@
             this.Controls.Add(this.fixedPanel);
             this.Controls.Add(this.audioPanel);
             this.Controls.Add(this.mainMenuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(923, 569);
+            this.MinimumSize = new System.Drawing.Size(923, 569);
             this.Name = "MainWindow";
             this.Text = "LED Controller";
             this.mainMenuStrip.ResumeLayout(false);

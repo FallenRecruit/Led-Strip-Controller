@@ -30,10 +30,8 @@ namespace Led_Strip_Controller
         int _fixR = Convert.ToInt32(ConfigurationManager.AppSettings["FixedR"]);
         int _fixG = Convert.ToInt32(ConfigurationManager.AppSettings["FixedG"]);
         int _fixB = Convert.ToInt32(ConfigurationManager.AppSettings["FixedB"]);
-        
-        int _scroll = 0;
 
-        int _activePannel = 0;
+        int _scroll = 0;
 
         public MainWindow()
         {
@@ -97,51 +95,11 @@ namespace Led_Strip_Controller
             {
                 box.Checked = false;
             }
-            try
-            {
-                clicked.Checked = true;
-            }
-            catch { }
-
-            if (clicked == checkFixed)
-            {
-                _activePannel = 0;
-            }
-            else if (clicked == checkFade)
-            {
-                _activePannel = 1;
-            }
-            else if (clicked == checkAudio)
-            {
-                _activePannel = 2;
-            }
-            else if(clicked == checkCustom)
-            {
-                _activePannel = 3;
-            }
+            
+            clicked.Checked = true;
             
         }
 
-        private void ColorChanged(object sender, EventArgs e)
-        {
-            switch (_activePannel)
-            {
-                case 0:
-                    serial.SetArgb(fixedColor.BackColor.A, fixedColor.BackColor.R, fixedColor.BackColor.G, fixedColor.BackColor.B);
-                    break;
-                case 1:
-                    serial.SetArgb(fadeColor.BackColor.A, fadeColor.BackColor.R, fadeColor.BackColor.G, fadeColor.BackColor.B);
-                    break;
-                case 2:
-                    serial.SetArgb(audioColor.BackColor.A, audioColor.BackColor.R, audioColor.BackColor.G, audioColor.BackColor.B);
-                    break;
-                case 3:
-                    serial.SetArgb(customColor.BackColor.A, customColor.BackColor.R, customColor.BackColor.G, customColor.BackColor.B);
-                    break;
-                default:
-                    break;
-            }
-        }
 
         /// <summary>
         /// Convert HSV to RGB
@@ -264,6 +222,7 @@ namespace Led_Strip_Controller
         private void SetFixed()
         {
             fixedColor.BackColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
+            serial.SetArgb(255,sliderR.Value,sliderG.Value,sliderB.Value);
         }
 
         private void RgbBars(object sender, EventArgs e) { SetFixed(); }
@@ -318,6 +277,7 @@ namespace Led_Strip_Controller
             HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
             audioColor.BackColor = Color.FromArgb(red, green, blue);
+            //serial.SetArgb(255,red,green,blue);
         }
 
         /// <summary>
