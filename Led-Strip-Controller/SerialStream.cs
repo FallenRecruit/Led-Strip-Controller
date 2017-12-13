@@ -69,9 +69,11 @@ namespace Led_Strip_Controller
             {
                 MessageBox.Show("Could not open" + _port.PortName,
                     "Error", MessageBoxButtons.OK);
+                _t.IsEnabled = false;
             }
         }
 
         public void SetRgb(int r, int g, int b) { _r = r; _g = g; _b = b;}
+        public void SetArgb(int a, int r, int g, int b) { _a = a; _r = r; _g = g; _b = b; }
     }
 }

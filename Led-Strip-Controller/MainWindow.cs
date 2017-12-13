@@ -15,6 +15,10 @@ namespace Led_Strip_Controller
 {
     public partial class MainWindow : Form
     {
+
+        //TODO
+        //setup color set
+
         Analyzer analyzer;
         SerialStream serial;
 
@@ -26,8 +30,10 @@ namespace Led_Strip_Controller
         int _fixR = Convert.ToInt32(ConfigurationManager.AppSettings["FixedR"]);
         int _fixG = Convert.ToInt32(ConfigurationManager.AppSettings["FixedG"]);
         int _fixB = Convert.ToInt32(ConfigurationManager.AppSettings["FixedB"]);
-
+        
         int _scroll = 0;
+
+        int _activePannel = 0;
 
         public MainWindow()
         {
@@ -91,7 +97,51 @@ namespace Led_Strip_Controller
             {
                 box.Checked = false;
             }
-            clicked.Checked = true;
+            try
+            {
+                clicked.Checked = true;
+            }
+            catch { }
+            
+
+            if (clicked == checkFixed)
+            {
+                _activePannel = 0;
+            }
+            else if (clicked == checkFade)
+            {
+                _activePannel = 1;
+            }
+            else if (clicked == checkAudio)
+            {
+                _activePannel = 2;
+            }
+            else if(clicked == checkCustom)
+            {
+                _activePannel = 3;
+            }
+            
+        }
+
+        private void ColorChanged(object sender, EventArgs e)
+        {
+            switch (_activePannel)
+            {
+                case 0:
+                    serial.SetArgb(fixedColor.BackColor.A, fixedColor.BackColor.R, fixedColor.BackColor.G, fixedColor.BackColor.B);
+                    break;
+                case 1:
+                    serial.SetArgb(fadeColor.BackColor.A, fadeColor.BackColor.R, fadeColor.BackColor.G, fadeColor.BackColor.B);
+                    break;
+                case 2:
+                    serial.SetArgb(audioColor.BackColor.A, audioColor.BackColor.R, audioColor.BackColor.G, audioColor.BackColor.B);
+                    break;
+                case 3:
+                    serial.SetArgb(customColor.BackColor.A, customColor.BackColor.R, customColor.BackColor.G, customColor.BackColor.B);
+                    break;
+                default:
+                    break;
+            }
         }
 
         /// <summary>

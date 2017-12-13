@@ -72,7 +72,7 @@
             this.customPattern1 = new System.Windows.Forms.PictureBox();
             this.customPattern0 = new System.Windows.Forms.PictureBox();
             this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.patternColor = new System.Windows.Forms.Panel();
+            this.customColor = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
@@ -157,7 +157,7 @@
             this.comPortToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripComboBoxCOMPort});
             this.comPortToolStripMenuItem.Name = "comPortToolStripMenuItem";
-            this.comPortToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.comPortToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.comPortToolStripMenuItem.Text = "COM Port";
             // 
             // toolStripComboBoxCOMPort
@@ -404,6 +404,7 @@
             this.audioColor.Name = "audioColor";
             this.audioColor.Size = new System.Drawing.Size(125, 125);
             this.audioColor.TabIndex = 24;
+            this.audioColor.BackColorChanged += new System.EventHandler(this.CheckClick);
             // 
             // sliderOffset
             // 
@@ -440,6 +441,7 @@
             this.fixedColor.Name = "fixedColor";
             this.fixedColor.Size = new System.Drawing.Size(125, 125);
             this.fixedColor.TabIndex = 23;
+            this.fixedColor.BackColorChanged += new System.EventHandler(this.ColorChanged);
             // 
             // panel3
             // 
@@ -453,7 +455,7 @@
             this.panel3.Controls.Add(this.customPattern1);
             this.panel3.Controls.Add(this.customPattern0);
             this.panel3.Controls.Add(this.checkBox8);
-            this.panel3.Controls.Add(this.patternColor);
+            this.panel3.Controls.Add(this.customColor);
             this.panel3.Controls.Add(this.comboBox1);
             this.panel3.Controls.Add(this.checkBox7);
             this.panel3.Controls.Add(this.checkBox6);
@@ -567,14 +569,15 @@
             this.checkBox8.TabIndex = 30;
             this.checkBox8.UseVisualStyleBackColor = true;
             // 
-            // patternColor
+            // customColor
             // 
-            this.patternColor.BackColor = System.Drawing.Color.Lime;
-            this.patternColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.patternColor.Location = new System.Drawing.Point(739, 16);
-            this.patternColor.Name = "patternColor";
-            this.patternColor.Size = new System.Drawing.Size(125, 125);
-            this.patternColor.TabIndex = 24;
+            this.customColor.BackColor = System.Drawing.Color.Lime;
+            this.customColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.customColor.Location = new System.Drawing.Point(739, 16);
+            this.customColor.Name = "customColor";
+            this.customColor.Size = new System.Drawing.Size(125, 125);
+            this.customColor.TabIndex = 24;
+            this.customColor.BackColorChanged += new System.EventHandler(this.CheckClick);
             // 
             // comboBox1
             // 
@@ -727,6 +730,7 @@
             this.fadeColor.Name = "fadeColor";
             this.fadeColor.Size = new System.Drawing.Size(125, 125);
             this.fadeColor.TabIndex = 23;
+            this.fadeColor.BackColorChanged += new System.EventHandler(this.ColorChanged);
             // 
             // checkFade
             // 
@@ -855,7 +859,7 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Panel fixedColor;
         private System.Windows.Forms.Panel audioColor;
-        private System.Windows.Forms.Panel patternColor;
+        private System.Windows.Forms.Panel customColor;
         private System.Windows.Forms.Label patternLabel0;
         private System.Windows.Forms.PictureBox customPattern6;
         private System.Windows.Forms.PictureBox customPattern5;
