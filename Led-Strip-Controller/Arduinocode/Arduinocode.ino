@@ -15,18 +15,39 @@ void setup()
 
 void loop() 
 {
-int val=Serial.read(); 
+String val = Serial.readString(); 
 
-if(val==1)
-{
-  Serial.println("Led on");
-  digitalWrite(ledPin,HIGH);
-}
-else if(val==0)
-{
-Serial.println("Led off");
-digitalWrite(ledPin,LOW);
-}
-Serial.flush(); // clear serial port
+String a = getValue(val, ':', 0);
+String r = getValue(val, ':', 1);
+String g = getValue(val, ':', 2);
+String b = getValue(val, ':', 3);
 
+int _a = a.toInt();
+int _r = r.toInt();
+int _g = g.toInt();
+int _b = b.toInt();
+
+//Serial.flush(); // clear serial port
+if (val != 0){
+  Serial.print(val + " " + _r + " " + _g + " " + _b);
+  analogWrite(redLedPin,_r);
+  analogWrite(greenLedPin,_g);
+  analogWrite(blueLedPin,_b);
+  }
+}
+
+String getValue(String data, char separator, int index)
+{
+    int found = 0;
+    int strIndex[] = { 0, -1 };
+    int maxIndex = data.length() - 1;
+
+    for (int i = 0; i <= maxIndex && found <= index; i++) {
+        if (data.charAt(i) == separator || i == maxIndex) {
+            found++;
+            strIndex[0] = strIndex[1] + 1;
+            strIndex[1] = (i == maxIndex) ? i+1 : i;
+        }
+    }
+    return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
