@@ -25,10 +25,12 @@ namespace Led_Strip_Controller
         int _fixG = Convert.ToInt32(ConfigurationManager.AppSettings["FixedG"]);
         int _fixB = Convert.ToInt32(ConfigurationManager.AppSettings["FixedB"]);
 
+        int _scroll = 0;
+
         public MainWindow()
         {
             InitializeComponent();
-
+            
             sliderAmp.Maximum = (ushort.MaxValue);
 
             analyzer = new Analyzer(barL, barR, comboBoxDevice, sliderMult, _devIndex)
@@ -63,57 +65,22 @@ namespace Led_Strip_Controller
             config.Save(ConfigurationSaveMode.Minimal);
         }
 
-        float Map(float val, float inMin, float inMax, float outMin, float outMax)
+        double Map(double val, double inMin, double inMax, double outMin, double outMax)
         {
             return outMin + (val - inMin) * (outMax - outMin) / (inMax - inMin);
         }
-
+        
         private void CheckClick(object sender, EventArgs e)
         {
-            checkFixed.Checked = !checkFixed.Checked;
-            checkAudio.Checked = !checkAudio.Checked;
+            CheckBox[] active = new CheckBox[] { checkFixed, checkAudio, checkCustom, checkScroll};
 
-        }
-
-        /// <summary>
-        /// Code for Fixed color pannel
-        /// </summary>
-        /// <param name="Fixed color"></param>
-
-        private void SetFixed()
-        {
-            fixedColor.BackColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
-        }
-
-        private void RgbBars(object sender, EventArgs e) { SetFixed(); }
-
-        /// <summary>
-        /// Code for Audio react pannel
-        /// </summary>
-        /// <param name="Audio react"></param>
-
-        private void ComboBoxDev_SelIndChanged(object sender, EventArgs e)
-        {
-            SaveSettings();
-            if (loaded)
+            CheckBox clicked = sender as CheckBox;
+            
+            foreach (CheckBox box in active)
             {
-                DialogResult dialogResult = MessageBox.Show("Program needs to restart to change audio device, would you like to restart",
-                    "Restart me?", MessageBoxButtons.YesNo);
-
-                if (dialogResult == DialogResult.Yes)
-                {
-                    Process.Start(AppDomain.CurrentDomain.FriendlyName);
-                    Application.Exit();
-                }
-                else if (dialogResult == DialogResult.No) {/*do nothing*/}
+                box.Checked = false;
             }
-            //analyzer.ChangeInput();  
-        }
-
-        private void EventTick(object sender, EventArgs e)
-        {
-            try { sliderAmp.Value = analyzer.Outlev(); sliderAmp.BackColor = Color.White; } catch { sliderAmp.BackColor = Color.Red; }
-            Slider();
+            clicked.Checked = true;
         }
 
         /// <summary>
@@ -228,13 +195,66 @@ namespace Led_Strip_Controller
             if (i > 255) return 255;
             return i;
         }
+        
+        /// <summary>
+        /// Code for Fixed color pannel
+        /// </summary>
+        /// <param name="Fixed color"></param>
+
+        private void SetFixed()
+        {
+            fixedColor.BackColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
+        }
+
+        private void RgbBars(object sender, EventArgs e) { SetFixed(); }
+
+        /// <summary>
+        /// Code for Audio react pannel
+        /// </summary>
+        /// <param name="Audio react"></param>
+
+        private void ComboBoxDev_SelIndChanged(object sender, EventArgs e)
+        {
+            SaveSettings();
+            if (loaded)
+            {
+                DialogResult dialogResult = MessageBox.Show("Program needs to restart to change audio device, would you like to restart",
+                    "Restart me?", MessageBoxButtons.YesNo);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Process.Start(AppDomain.CurrentDomain.FriendlyName);
+                    Application.Exit();
+                }
+                else if (dialogResult == DialogResult.No) {/*do nothing*/}
+            }
+            //analyzer.ChangeInput();  
+        }
+
+        private void EventTick(object sender, EventArgs e)
+        {
+            try { sliderAmp.Value = analyzer.Outlev(); sliderAmp.BackColor = Color.White; } catch { sliderAmp.BackColor = Color.Red; }
+            Slider();
+        }
 
         private void Hsv(object sender, EventArgs e) { Slider(); }
 
+        private double Offset(double _in)
+        {
+            _in = _in + sliderOffset.Value;
+
+            if (_in > 360)
+            {
+                _in = _in - 360;
+            }
+
+            return _in;
+        }
+
         private void Slider()
         {
-            double hue = Map(sliderAmp.Value, 0, ushort.MaxValue, 0, 360);
-            double sat = (double)sliderBri.Value / 100;
+            double hue = Offset( Map( sliderAmp.Value, 0, ushort.MaxValue, 0, 360));
+            double sat = (double)sliderAudioBri.Value / 100;
             HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
             audioColor.BackColor = Color.FromArgb(red, green, blue);
@@ -261,5 +281,30 @@ namespace Led_Strip_Controller
             if (MyDialog.ShowDialog() == DialogResult.OK)
                 pan.BackColor = MyDialog.Color;
         }
+
+        /// <summary>
+        /// Code for custom scroll pannel
+        /// </summary>
+        /// <param name="Custom Pattern"></param>
+
+        private void ScrollTimer_Tick(object sender, EventArgs e)
+        {
+            _scroll++;
+
+            if (_scroll > 360) { _scroll = 0; }
+
+            double hue = _scroll;
+            double sat = (double)sliderScrollBri.Value / 100;
+            HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
+
+            scrollColor.BackColor = Color.FromArgb(red, green, blue);
+        }
+
+        private void SliderScrollSpeed_Scroll(object sender, EventArgs e)
+        {
+            scrollTimer.Interval = sliderScrollSpeed.Value;
+
+        }
+
     }
 }

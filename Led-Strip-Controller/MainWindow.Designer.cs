@@ -48,16 +48,18 @@
             this.labelRed = new System.Windows.Forms.Label();
             this.labelGreen = new System.Windows.Forms.Label();
             this.labelBlue = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.audioMultipLabel = new System.Windows.Forms.Label();
             this.sliderAmp = new System.Windows.Forms.TrackBar();
-            this.sliderBri = new System.Windows.Forms.TrackBar();
-            this.label7 = new System.Windows.Forms.Label();
+            this.sliderAudioBri = new System.Windows.Forms.TrackBar();
+            this.audioBrightLabel = new System.Windows.Forms.Label();
             this.fixedLabel = new System.Windows.Forms.Label();
             this.audioLabel = new System.Windows.Forms.Label();
             this.checkFixed = new System.Windows.Forms.CheckBox();
             this.checkAudio = new System.Windows.Forms.CheckBox();
             this.audioPanel = new System.Windows.Forms.Panel();
+            this.audioOffsetLabel = new System.Windows.Forms.Label();
             this.audioColor = new System.Windows.Forms.Panel();
+            this.sliderOffset = new System.Windows.Forms.TrackBar();
             this.fixedPanel = new System.Windows.Forms.Panel();
             this.fixedColor = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -78,16 +80,26 @@
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkCustom = new System.Windows.Forms.CheckBox();
             this.patternLabel1 = new System.Windows.Forms.Label();
+            this.scrollPanel = new System.Windows.Forms.Panel();
+            this.sliderScrollBri = new System.Windows.Forms.TrackBar();
+            this.scrollBrightLabel = new System.Windows.Forms.Label();
+            this.scrollSpeedLabel = new System.Windows.Forms.Label();
+            this.scrollColor = new System.Windows.Forms.Panel();
+            this.checkScroll = new System.Windows.Forms.CheckBox();
+            this.scrollLabel = new System.Windows.Forms.Label();
+            this.sliderScrollSpeed = new System.Windows.Forms.TrackBar();
+            this.scrollTimer = new System.Windows.Forms.Timer(this.components);
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sliderR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sliderG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sliderB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sliderMult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sliderAmp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sliderBri)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderAudioBri)).BeginInit();
             this.audioPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderOffset)).BeginInit();
             this.fixedPanel.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.customPattern6)).BeginInit();
@@ -97,6 +109,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.customPattern2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customPattern1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customPattern0)).BeginInit();
+            this.scrollPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollBri)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -222,6 +237,7 @@
             // 
             // sliderMult
             // 
+            this.sliderMult.LargeChange = 1;
             this.sliderMult.Location = new System.Drawing.Point(202, 26);
             this.sliderMult.Name = "sliderMult";
             this.sliderMult.Size = new System.Drawing.Size(226, 45);
@@ -260,16 +276,16 @@
             this.labelBlue.TabIndex = 12;
             this.labelBlue.Text = "Blue";
             // 
-            // label5
+            // audioMultipLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(68, 33);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(131, 16);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Volume Multiplyer";
+            this.audioMultipLabel.AutoSize = true;
+            this.audioMultipLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.audioMultipLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.audioMultipLabel.Location = new System.Drawing.Point(68, 33);
+            this.audioMultipLabel.Name = "audioMultipLabel";
+            this.audioMultipLabel.Size = new System.Drawing.Size(131, 16);
+            this.audioMultipLabel.TabIndex = 13;
+            this.audioMultipLabel.Text = "Volume Multiplyer";
             // 
             // sliderAmp
             // 
@@ -280,25 +296,27 @@
             this.sliderAmp.Size = new System.Drawing.Size(380, 45);
             this.sliderAmp.TabIndex = 14;
             // 
-            // sliderBri
+            // sliderAudioBri
             // 
-            this.sliderBri.Location = new System.Drawing.Point(496, 91);
-            this.sliderBri.Maximum = 100;
-            this.sliderBri.Name = "sliderBri";
-            this.sliderBri.Size = new System.Drawing.Size(238, 45);
-            this.sliderBri.TabIndex = 16;
-            this.sliderBri.TickFrequency = 0;
-            this.sliderBri.Value = 100;
-            this.sliderBri.Scroll += new System.EventHandler(this.Hsv);
+            this.sliderAudioBri.Location = new System.Drawing.Point(521, 91);
+            this.sliderAudioBri.Maximum = 100;
+            this.sliderAudioBri.Name = "sliderAudioBri";
+            this.sliderAudioBri.Size = new System.Drawing.Size(213, 45);
+            this.sliderAudioBri.TabIndex = 16;
+            this.sliderAudioBri.TickFrequency = 0;
+            this.sliderAudioBri.Value = 100;
+            this.sliderAudioBri.Scroll += new System.EventHandler(this.Hsv);
             // 
-            // label7
+            // audioBrightLabel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(434, 101);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 13);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "Brightness";
+            this.audioBrightLabel.AutoSize = true;
+            this.audioBrightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.audioBrightLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.audioBrightLabel.Location = new System.Drawing.Point(434, 101);
+            this.audioBrightLabel.Name = "audioBrightLabel";
+            this.audioBrightLabel.Size = new System.Drawing.Size(81, 16);
+            this.audioBrightLabel.TabIndex = 19;
+            this.audioBrightLabel.Text = "Brightness";
             // 
             // fixedLabel
             // 
@@ -347,30 +365,53 @@
             // audioPanel
             // 
             this.audioPanel.BackColor = System.Drawing.Color.White;
+            this.audioPanel.Controls.Add(this.audioOffsetLabel);
             this.audioPanel.Controls.Add(this.audioColor);
             this.audioPanel.Controls.Add(this.barL);
             this.audioPanel.Controls.Add(this.checkAudio);
             this.audioPanel.Controls.Add(this.barR);
             this.audioPanel.Controls.Add(this.comboBoxDevice);
             this.audioPanel.Controls.Add(this.audioLabel);
-            this.audioPanel.Controls.Add(this.label5);
+            this.audioPanel.Controls.Add(this.audioMultipLabel);
             this.audioPanel.Controls.Add(this.sliderAmp);
-            this.audioPanel.Controls.Add(this.label7);
-            this.audioPanel.Controls.Add(this.sliderBri);
+            this.audioPanel.Controls.Add(this.audioBrightLabel);
+            this.audioPanel.Controls.Add(this.sliderAudioBri);
             this.audioPanel.Controls.Add(this.sliderMult);
+            this.audioPanel.Controls.Add(this.sliderOffset);
             this.audioPanel.Location = new System.Drawing.Point(12, 197);
             this.audioPanel.Name = "audioPanel";
             this.audioPanel.Size = new System.Drawing.Size(916, 155);
             this.audioPanel.TabIndex = 25;
             // 
+            // audioOffsetLabel
+            // 
+            this.audioOffsetLabel.AutoSize = true;
+            this.audioOffsetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.audioOffsetLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.audioOffsetLabel.Location = new System.Drawing.Point(434, 33);
+            this.audioOffsetLabel.Name = "audioOffsetLabel";
+            this.audioOffsetLabel.Size = new System.Drawing.Size(48, 16);
+            this.audioOffsetLabel.TabIndex = 25;
+            this.audioOffsetLabel.Text = "Offset";
+            // 
             // audioColor
             // 
             this.audioColor.BackColor = System.Drawing.Color.Red;
             this.audioColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.audioColor.Location = new System.Drawing.Point(776, 13);
+            this.audioColor.Location = new System.Drawing.Point(776, 16);
             this.audioColor.Name = "audioColor";
             this.audioColor.Size = new System.Drawing.Size(125, 125);
             this.audioColor.TabIndex = 24;
+            // 
+            // sliderOffset
+            // 
+            this.sliderOffset.LargeChange = 10;
+            this.sliderOffset.Location = new System.Drawing.Point(488, 26);
+            this.sliderOffset.Maximum = 360;
+            this.sliderOffset.Name = "sliderOffset";
+            this.sliderOffset.Size = new System.Drawing.Size(246, 45);
+            this.sliderOffset.TabIndex = 26;
+            this.sliderOffset.TickFrequency = 20;
             // 
             // fixedPanel
             // 
@@ -386,14 +427,14 @@
             this.fixedPanel.Controls.Add(this.sliderR);
             this.fixedPanel.Location = new System.Drawing.Point(12, 36);
             this.fixedPanel.Name = "fixedPanel";
-            this.fixedPanel.Size = new System.Drawing.Size(915, 155);
+            this.fixedPanel.Size = new System.Drawing.Size(365, 155);
             this.fixedPanel.TabIndex = 26;
             // 
             // fixedColor
             // 
             this.fixedColor.BackColor = System.Drawing.Color.White;
             this.fixedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.fixedColor.Location = new System.Drawing.Point(776, 16);
+            this.fixedColor.Location = new System.Drawing.Point(220, 16);
             this.fixedColor.Name = "fixedColor";
             this.fixedColor.Size = new System.Drawing.Size(125, 125);
             this.fixedColor.TabIndex = 23;
@@ -418,7 +459,7 @@
             this.panel3.Controls.Add(this.checkBox4);
             this.panel3.Controls.Add(this.checkBox3);
             this.panel3.Controls.Add(this.checkBox2);
-            this.panel3.Controls.Add(this.checkBox1);
+            this.panel3.Controls.Add(this.checkCustom);
             this.panel3.Controls.Add(this.patternLabel1);
             this.panel3.ForeColor = System.Drawing.Color.Black;
             this.panel3.Location = new System.Drawing.Point(13, 359);
@@ -512,7 +553,7 @@
             this.customPattern0.TabIndex = 31;
             this.customPattern0.TabStop = false;
             this.customPattern0.Click += new System.EventHandler(this.CustomPattern_Click);
-            //
+            // 
             // checkBox8
             // 
             this.checkBox8.AutoSize = true;
@@ -608,15 +649,16 @@
             this.checkBox2.TabIndex = 23;
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // checkCustom
             // 
-            this.checkBox1.AutoCheck = false;
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(30, 70);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 22;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkCustom.AutoCheck = false;
+            this.checkCustom.AutoSize = true;
+            this.checkCustom.Location = new System.Drawing.Point(30, 70);
+            this.checkCustom.Name = "checkCustom";
+            this.checkCustom.Size = new System.Drawing.Size(15, 14);
+            this.checkCustom.TabIndex = 22;
+            this.checkCustom.UseVisualStyleBackColor = true;
+            this.checkCustom.Click += new System.EventHandler(this.CheckClick);
             // 
             // patternLabel1
             // 
@@ -628,12 +670,108 @@
             this.patternLabel1.TabIndex = 20;
             this.patternLabel1.Text = "Pattern";
             // 
+            // scrollPanel
+            // 
+            this.scrollPanel.BackColor = System.Drawing.Color.White;
+            this.scrollPanel.Controls.Add(this.sliderScrollBri);
+            this.scrollPanel.Controls.Add(this.scrollBrightLabel);
+            this.scrollPanel.Controls.Add(this.scrollSpeedLabel);
+            this.scrollPanel.Controls.Add(this.scrollColor);
+            this.scrollPanel.Controls.Add(this.checkScroll);
+            this.scrollPanel.Controls.Add(this.scrollLabel);
+            this.scrollPanel.Controls.Add(this.sliderScrollSpeed);
+            this.scrollPanel.Location = new System.Drawing.Point(383, 36);
+            this.scrollPanel.Name = "scrollPanel";
+            this.scrollPanel.Size = new System.Drawing.Size(545, 155);
+            this.scrollPanel.TabIndex = 27;
+            // 
+            // sliderScrollBri
+            // 
+            this.sliderScrollBri.Location = new System.Drawing.Point(150, 70);
+            this.sliderScrollBri.Maximum = 100;
+            this.sliderScrollBri.Name = "sliderScrollBri";
+            this.sliderScrollBri.Size = new System.Drawing.Size(213, 45);
+            this.sliderScrollBri.TabIndex = 27;
+            this.sliderScrollBri.TickFrequency = 0;
+            this.sliderScrollBri.Value = 100;
+            // 
+            // scrollBrightLabel
+            // 
+            this.scrollBrightLabel.AutoSize = true;
+            this.scrollBrightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.scrollBrightLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.scrollBrightLabel.Location = new System.Drawing.Point(63, 70);
+            this.scrollBrightLabel.Name = "scrollBrightLabel";
+            this.scrollBrightLabel.Size = new System.Drawing.Size(81, 16);
+            this.scrollBrightLabel.TabIndex = 28;
+            this.scrollBrightLabel.Text = "Brightness";
+            // 
+            // scrollSpeedLabel
+            // 
+            this.scrollSpeedLabel.AutoSize = true;
+            this.scrollSpeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scrollSpeedLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.scrollSpeedLabel.Location = new System.Drawing.Point(63, 35);
+            this.scrollSpeedLabel.Name = "scrollSpeedLabel";
+            this.scrollSpeedLabel.Size = new System.Drawing.Size(54, 16);
+            this.scrollSpeedLabel.TabIndex = 27;
+            this.scrollSpeedLabel.Text = "Speed";
+            // 
+            // scrollColor
+            // 
+            this.scrollColor.BackColor = System.Drawing.Color.White;
+            this.scrollColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scrollColor.Location = new System.Drawing.Point(405, 16);
+            this.scrollColor.Name = "scrollColor";
+            this.scrollColor.Size = new System.Drawing.Size(125, 125);
+            this.scrollColor.TabIndex = 23;
+            // 
+            // checkScroll
+            // 
+            this.checkScroll.AutoCheck = false;
+            this.checkScroll.AutoSize = true;
+            this.checkScroll.Location = new System.Drawing.Point(30, 70);
+            this.checkScroll.Name = "checkScroll";
+            this.checkScroll.Size = new System.Drawing.Size(15, 14);
+            this.checkScroll.TabIndex = 22;
+            this.checkScroll.UseVisualStyleBackColor = true;
+            this.checkScroll.Click += new System.EventHandler(this.CheckClick);
+            // 
+            // scrollLabel
+            // 
+            this.scrollLabel.AutoSize = true;
+            this.scrollLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scrollLabel.Location = new System.Drawing.Point(16, 16);
+            this.scrollLabel.Name = "scrollLabel";
+            this.scrollLabel.Size = new System.Drawing.Size(48, 16);
+            this.scrollLabel.TabIndex = 20;
+            this.scrollLabel.Text = "Scroll";
+            // 
+            // sliderScrollSpeed
+            // 
+            this.sliderScrollSpeed.Location = new System.Drawing.Point(117, 35);
+            this.sliderScrollSpeed.Maximum = 100;
+            this.sliderScrollSpeed.Minimum = 5;
+            this.sliderScrollSpeed.Name = "sliderScrollSpeed";
+            this.sliderScrollSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.sliderScrollSpeed.Size = new System.Drawing.Size(246, 45);
+            this.sliderScrollSpeed.TabIndex = 3;
+            this.sliderScrollSpeed.TickFrequency = 5;
+            this.sliderScrollSpeed.Value = 100;
+            this.sliderScrollSpeed.Scroll += new System.EventHandler(this.SliderScrollSpeed_Scroll);
+            // 
+            // scrollTimer
+            // 
+            this.scrollTimer.Enabled = true;
+            this.scrollTimer.Tick += new System.EventHandler(this.ScrollTimer_Tick);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(941, 530);
+            this.Controls.Add(this.scrollPanel);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.fixedPanel);
             this.Controls.Add(this.audioPanel);
@@ -649,9 +787,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.sliderB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sliderMult)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sliderAmp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sliderBri)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderAudioBri)).EndInit();
             this.audioPanel.ResumeLayout(false);
             this.audioPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderOffset)).EndInit();
             this.fixedPanel.ResumeLayout(false);
             this.fixedPanel.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -663,6 +802,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.customPattern2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.customPattern1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.customPattern0)).EndInit();
+            this.scrollPanel.ResumeLayout(false);
+            this.scrollPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollBri)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -688,18 +831,18 @@
         private System.Windows.Forms.Label labelRed;
         private System.Windows.Forms.Label labelGreen;
         private System.Windows.Forms.Label labelBlue;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label audioMultipLabel;
         private System.Windows.Forms.TrackBar sliderAmp;
-        private System.Windows.Forms.TrackBar sliderBri;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TrackBar sliderAudioBri;
+        private System.Windows.Forms.Label audioBrightLabel;
         private System.Windows.Forms.Label fixedLabel;
         private System.Windows.Forms.Label audioLabel;
         private System.Windows.Forms.CheckBox checkFixed;
         private System.Windows.Forms.CheckBox checkAudio;
+        private System.Windows.Forms.CheckBox checkCustom;
         private System.Windows.Forms.Panel audioPanel;
         private System.Windows.Forms.Panel fixedPanel;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label patternLabel1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.CheckBox checkBox7;
@@ -720,6 +863,17 @@
         private System.Windows.Forms.PictureBox customPattern1;
         private System.Windows.Forms.PictureBox customPattern0;
         private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.Label audioOffsetLabel;
+        private System.Windows.Forms.TrackBar sliderOffset;
+        private System.Windows.Forms.Panel scrollPanel;
+        private System.Windows.Forms.Label scrollSpeedLabel;
+        private System.Windows.Forms.Panel scrollColor;
+        private System.Windows.Forms.CheckBox checkScroll;
+        private System.Windows.Forms.Label scrollLabel;
+        private System.Windows.Forms.TrackBar sliderScrollSpeed;
+        private System.Windows.Forms.TrackBar sliderScrollBri;
+        private System.Windows.Forms.Label scrollBrightLabel;
+        private System.Windows.Forms.Timer scrollTimer;
     }
 }
 
