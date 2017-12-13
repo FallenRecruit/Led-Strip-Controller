@@ -29,32 +29,16 @@ namespace Led_Strip_Controller
 
             _t = new DispatcherTimer();
             _t.Tick += _t_Tick;
-            _t.Interval = TimeSpan.FromMilliseconds(4.1666666666667); //240hz refresh rate
+            _t.Interval = TimeSpan.FromMilliseconds(1000);//4.1666666666667); //240hz refresh rate
             _t.IsEnabled = false;
         }
 
         private void _t_Tick(object sender, EventArgs e)
         {
             _port.Open();
-            _port.Write(Pad(_a) +":"+ Pad(_r) +":"+ Pad(_g) +":"+ Pad(_b));
+            _port.Write(_a +":"+ _r +":"+ _g +":"+ _b);
             _port.Close();
             
-        }
-
-        private string Pad(int _in)
-        {
-            string _out;
-            _out = _in.ToString();
-            if (_in < 100)
-            {
-                _out = "0" + _out;
-            }
-            else if (_in < 10)
-            {
-                _out = "00" + _out;
-            } 
-
-            return _out;
         }
 
         public void SetPort(string Port)
