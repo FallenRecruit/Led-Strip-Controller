@@ -83,14 +83,15 @@
             this.checkCustom = new System.Windows.Forms.CheckBox();
             this.patternLabel1 = new System.Windows.Forms.Label();
             this.scrollPanel = new System.Windows.Forms.Panel();
-            this.sliderScrollBri = new System.Windows.Forms.TrackBar();
-            this.scrollBrightLabel = new System.Windows.Forms.Label();
-            this.scrollSpeedLabel = new System.Windows.Forms.Label();
-            this.scrollColor = new System.Windows.Forms.Panel();
-            this.checkScroll = new System.Windows.Forms.CheckBox();
-            this.scrollLabel = new System.Windows.Forms.Label();
-            this.sliderScrollSpeed = new System.Windows.Forms.TrackBar();
+            this.fadeScrollBri = new System.Windows.Forms.TrackBar();
+            this.fadeBrightLabel = new System.Windows.Forms.Label();
+            this.fadeSpeedLabel = new System.Windows.Forms.Label();
+            this.fadeColor = new System.Windows.Forms.Panel();
+            this.checkFade = new System.Windows.Forms.CheckBox();
+            this.fadeLabel = new System.Windows.Forms.Label();
+            this.fadeScrollSpeed = new System.Windows.Forms.TrackBar();
             this.scrollTimer = new System.Windows.Forms.Timer(this.components);
+            this.serialTimer = new System.Windows.Forms.Timer(this.components);
             this.mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sliderR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sliderG)).BeginInit();
@@ -110,8 +111,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.customPattern1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customPattern0)).BeginInit();
             this.scrollPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollBri)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fadeScrollBri)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fadeScrollSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -123,7 +124,7 @@
             this.toolsToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(941, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(907, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "mainMenuStrip";
             // 
@@ -156,7 +157,7 @@
             this.comPortToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripComboBoxCOMPort});
             this.comPortToolStripMenuItem.Name = "comPortToolStripMenuItem";
-            this.comPortToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.comPortToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.comPortToolStripMenuItem.Text = "COM Port";
             // 
             // toolStripComboBoxCOMPort
@@ -164,6 +165,7 @@
             this.toolStripComboBoxCOMPort.MaxDropDownItems = 32;
             this.toolStripComboBoxCOMPort.Name = "toolStripComboBoxCOMPort";
             this.toolStripComboBoxCOMPort.Size = new System.Drawing.Size(121, 23);
+            this.toolStripComboBoxCOMPort.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBoxCOMPort_Changed);
             // 
             // serialPort1
             // 
@@ -380,7 +382,7 @@
             this.audioPanel.Controls.Add(this.sliderOffset);
             this.audioPanel.Location = new System.Drawing.Point(12, 197);
             this.audioPanel.Name = "audioPanel";
-            this.audioPanel.Size = new System.Drawing.Size(916, 155);
+            this.audioPanel.Size = new System.Drawing.Size(880, 155);
             this.audioPanel.TabIndex = 25;
             // 
             // audioOffsetLabel
@@ -390,15 +392,15 @@
             this.audioOffsetLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.audioOffsetLabel.Location = new System.Drawing.Point(434, 33);
             this.audioOffsetLabel.Name = "audioOffsetLabel";
-            this.audioOffsetLabel.Size = new System.Drawing.Size(48, 16);
+            this.audioOffsetLabel.Size = new System.Drawing.Size(34, 16);
             this.audioOffsetLabel.TabIndex = 25;
-            this.audioOffsetLabel.Text = "Offset";
+            this.audioOffsetLabel.Text = "Idle";
             // 
             // audioColor
             // 
             this.audioColor.BackColor = System.Drawing.Color.Red;
             this.audioColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.audioColor.Location = new System.Drawing.Point(776, 16);
+            this.audioColor.Location = new System.Drawing.Point(740, 16);
             this.audioColor.Name = "audioColor";
             this.audioColor.Size = new System.Drawing.Size(125, 125);
             this.audioColor.TabIndex = 24;
@@ -406,10 +408,10 @@
             // sliderOffset
             // 
             this.sliderOffset.LargeChange = 10;
-            this.sliderOffset.Location = new System.Drawing.Point(488, 26);
+            this.sliderOffset.Location = new System.Drawing.Point(474, 26);
             this.sliderOffset.Maximum = 360;
             this.sliderOffset.Name = "sliderOffset";
-            this.sliderOffset.Size = new System.Drawing.Size(246, 45);
+            this.sliderOffset.Size = new System.Drawing.Size(260, 45);
             this.sliderOffset.TabIndex = 26;
             this.sliderOffset.TickFrequency = 20;
             // 
@@ -464,7 +466,7 @@
             this.panel3.ForeColor = System.Drawing.Color.Black;
             this.panel3.Location = new System.Drawing.Point(13, 359);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(915, 155);
+            this.panel3.Size = new System.Drawing.Size(879, 155);
             this.panel3.TabIndex = 27;
             // 
             // patternLabel0
@@ -569,7 +571,7 @@
             // 
             this.patternColor.BackColor = System.Drawing.Color.Lime;
             this.patternColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.patternColor.Location = new System.Drawing.Point(775, 16);
+            this.patternColor.Location = new System.Drawing.Point(739, 16);
             this.patternColor.Name = "patternColor";
             this.patternColor.Size = new System.Drawing.Size(125, 125);
             this.patternColor.TabIndex = 24;
@@ -673,92 +675,92 @@
             // scrollPanel
             // 
             this.scrollPanel.BackColor = System.Drawing.Color.White;
-            this.scrollPanel.Controls.Add(this.sliderScrollBri);
-            this.scrollPanel.Controls.Add(this.scrollBrightLabel);
-            this.scrollPanel.Controls.Add(this.scrollSpeedLabel);
-            this.scrollPanel.Controls.Add(this.scrollColor);
-            this.scrollPanel.Controls.Add(this.checkScroll);
-            this.scrollPanel.Controls.Add(this.scrollLabel);
-            this.scrollPanel.Controls.Add(this.sliderScrollSpeed);
+            this.scrollPanel.Controls.Add(this.fadeScrollBri);
+            this.scrollPanel.Controls.Add(this.fadeBrightLabel);
+            this.scrollPanel.Controls.Add(this.fadeSpeedLabel);
+            this.scrollPanel.Controls.Add(this.fadeColor);
+            this.scrollPanel.Controls.Add(this.checkFade);
+            this.scrollPanel.Controls.Add(this.fadeLabel);
+            this.scrollPanel.Controls.Add(this.fadeScrollSpeed);
             this.scrollPanel.Location = new System.Drawing.Point(383, 36);
             this.scrollPanel.Name = "scrollPanel";
-            this.scrollPanel.Size = new System.Drawing.Size(545, 155);
+            this.scrollPanel.Size = new System.Drawing.Size(509, 155);
             this.scrollPanel.TabIndex = 27;
             // 
-            // sliderScrollBri
+            // fadeScrollBri
             // 
-            this.sliderScrollBri.Location = new System.Drawing.Point(150, 70);
-            this.sliderScrollBri.Maximum = 100;
-            this.sliderScrollBri.Name = "sliderScrollBri";
-            this.sliderScrollBri.Size = new System.Drawing.Size(213, 45);
-            this.sliderScrollBri.TabIndex = 27;
-            this.sliderScrollBri.TickFrequency = 0;
-            this.sliderScrollBri.Value = 100;
+            this.fadeScrollBri.Location = new System.Drawing.Point(150, 70);
+            this.fadeScrollBri.Maximum = 100;
+            this.fadeScrollBri.Name = "fadeScrollBri";
+            this.fadeScrollBri.Size = new System.Drawing.Size(213, 45);
+            this.fadeScrollBri.TabIndex = 27;
+            this.fadeScrollBri.TickFrequency = 0;
+            this.fadeScrollBri.Value = 100;
             // 
-            // scrollBrightLabel
+            // fadeBrightLabel
             // 
-            this.scrollBrightLabel.AutoSize = true;
-            this.scrollBrightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
-            this.scrollBrightLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.scrollBrightLabel.Location = new System.Drawing.Point(63, 70);
-            this.scrollBrightLabel.Name = "scrollBrightLabel";
-            this.scrollBrightLabel.Size = new System.Drawing.Size(81, 16);
-            this.scrollBrightLabel.TabIndex = 28;
-            this.scrollBrightLabel.Text = "Brightness";
+            this.fadeBrightLabel.AutoSize = true;
+            this.fadeBrightLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.fadeBrightLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.fadeBrightLabel.Location = new System.Drawing.Point(63, 70);
+            this.fadeBrightLabel.Name = "fadeBrightLabel";
+            this.fadeBrightLabel.Size = new System.Drawing.Size(81, 16);
+            this.fadeBrightLabel.TabIndex = 28;
+            this.fadeBrightLabel.Text = "Brightness";
             // 
-            // scrollSpeedLabel
+            // fadeSpeedLabel
             // 
-            this.scrollSpeedLabel.AutoSize = true;
-            this.scrollSpeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scrollSpeedLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.scrollSpeedLabel.Location = new System.Drawing.Point(63, 35);
-            this.scrollSpeedLabel.Name = "scrollSpeedLabel";
-            this.scrollSpeedLabel.Size = new System.Drawing.Size(54, 16);
-            this.scrollSpeedLabel.TabIndex = 27;
-            this.scrollSpeedLabel.Text = "Speed";
+            this.fadeSpeedLabel.AutoSize = true;
+            this.fadeSpeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fadeSpeedLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.fadeSpeedLabel.Location = new System.Drawing.Point(63, 35);
+            this.fadeSpeedLabel.Name = "fadeSpeedLabel";
+            this.fadeSpeedLabel.Size = new System.Drawing.Size(54, 16);
+            this.fadeSpeedLabel.TabIndex = 27;
+            this.fadeSpeedLabel.Text = "Speed";
             // 
-            // scrollColor
+            // fadeColor
             // 
-            this.scrollColor.BackColor = System.Drawing.Color.White;
-            this.scrollColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scrollColor.Location = new System.Drawing.Point(405, 16);
-            this.scrollColor.Name = "scrollColor";
-            this.scrollColor.Size = new System.Drawing.Size(125, 125);
-            this.scrollColor.TabIndex = 23;
+            this.fadeColor.BackColor = System.Drawing.Color.White;
+            this.fadeColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fadeColor.Location = new System.Drawing.Point(369, 16);
+            this.fadeColor.Name = "fadeColor";
+            this.fadeColor.Size = new System.Drawing.Size(125, 125);
+            this.fadeColor.TabIndex = 23;
             // 
-            // checkScroll
+            // checkFade
             // 
-            this.checkScroll.AutoCheck = false;
-            this.checkScroll.AutoSize = true;
-            this.checkScroll.Location = new System.Drawing.Point(30, 70);
-            this.checkScroll.Name = "checkScroll";
-            this.checkScroll.Size = new System.Drawing.Size(15, 14);
-            this.checkScroll.TabIndex = 22;
-            this.checkScroll.UseVisualStyleBackColor = true;
-            this.checkScroll.Click += new System.EventHandler(this.CheckClick);
+            this.checkFade.AutoCheck = false;
+            this.checkFade.AutoSize = true;
+            this.checkFade.Location = new System.Drawing.Point(30, 70);
+            this.checkFade.Name = "checkFade";
+            this.checkFade.Size = new System.Drawing.Size(15, 14);
+            this.checkFade.TabIndex = 22;
+            this.checkFade.UseVisualStyleBackColor = true;
+            this.checkFade.Click += new System.EventHandler(this.CheckClick);
             // 
-            // scrollLabel
+            // fadeLabel
             // 
-            this.scrollLabel.AutoSize = true;
-            this.scrollLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scrollLabel.Location = new System.Drawing.Point(16, 16);
-            this.scrollLabel.Name = "scrollLabel";
-            this.scrollLabel.Size = new System.Drawing.Size(48, 16);
-            this.scrollLabel.TabIndex = 20;
-            this.scrollLabel.Text = "Scroll";
+            this.fadeLabel.AutoSize = true;
+            this.fadeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fadeLabel.Location = new System.Drawing.Point(16, 16);
+            this.fadeLabel.Name = "fadeLabel";
+            this.fadeLabel.Size = new System.Drawing.Size(44, 16);
+            this.fadeLabel.TabIndex = 20;
+            this.fadeLabel.Text = "Fade";
             // 
-            // sliderScrollSpeed
+            // fadeScrollSpeed
             // 
-            this.sliderScrollSpeed.Location = new System.Drawing.Point(117, 35);
-            this.sliderScrollSpeed.Maximum = 100;
-            this.sliderScrollSpeed.Minimum = 5;
-            this.sliderScrollSpeed.Name = "sliderScrollSpeed";
-            this.sliderScrollSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.sliderScrollSpeed.Size = new System.Drawing.Size(246, 45);
-            this.sliderScrollSpeed.TabIndex = 3;
-            this.sliderScrollSpeed.TickFrequency = 5;
-            this.sliderScrollSpeed.Value = 100;
-            this.sliderScrollSpeed.Scroll += new System.EventHandler(this.SliderScrollSpeed_Scroll);
+            this.fadeScrollSpeed.Location = new System.Drawing.Point(117, 35);
+            this.fadeScrollSpeed.Maximum = 100;
+            this.fadeScrollSpeed.Minimum = 5;
+            this.fadeScrollSpeed.Name = "fadeScrollSpeed";
+            this.fadeScrollSpeed.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.fadeScrollSpeed.Size = new System.Drawing.Size(246, 45);
+            this.fadeScrollSpeed.TabIndex = 3;
+            this.fadeScrollSpeed.TickFrequency = 10;
+            this.fadeScrollSpeed.Value = 100;
+            this.fadeScrollSpeed.Scroll += new System.EventHandler(this.SliderScrollSpeed_Scroll);
             // 
             // scrollTimer
             // 
@@ -770,7 +772,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(941, 530);
+            this.ClientSize = new System.Drawing.Size(907, 530);
             this.Controls.Add(this.scrollPanel);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.fixedPanel);
@@ -804,8 +806,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.customPattern0)).EndInit();
             this.scrollPanel.ResumeLayout(false);
             this.scrollPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollBri)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sliderScrollSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fadeScrollBri)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fadeScrollSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -866,14 +868,15 @@
         private System.Windows.Forms.Label audioOffsetLabel;
         private System.Windows.Forms.TrackBar sliderOffset;
         private System.Windows.Forms.Panel scrollPanel;
-        private System.Windows.Forms.Label scrollSpeedLabel;
-        private System.Windows.Forms.Panel scrollColor;
-        private System.Windows.Forms.CheckBox checkScroll;
-        private System.Windows.Forms.Label scrollLabel;
-        private System.Windows.Forms.TrackBar sliderScrollSpeed;
-        private System.Windows.Forms.TrackBar sliderScrollBri;
-        private System.Windows.Forms.Label scrollBrightLabel;
+        private System.Windows.Forms.Label fadeSpeedLabel;
+        private System.Windows.Forms.Panel fadeColor;
+        private System.Windows.Forms.CheckBox checkFade;
+        private System.Windows.Forms.Label fadeLabel;
+        private System.Windows.Forms.TrackBar fadeScrollSpeed;
+        private System.Windows.Forms.TrackBar fadeScrollBri;
+        private System.Windows.Forms.Label fadeBrightLabel;
         private System.Windows.Forms.Timer scrollTimer;
+        private System.Windows.Forms.Timer serialTimer;
     }
 }
 

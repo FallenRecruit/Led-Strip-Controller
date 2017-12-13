@@ -16,6 +16,8 @@ namespace Led_Strip_Controller
     public partial class MainWindow : Form
     {
         Analyzer analyzer;
+        SerialStream serial;
+
 
         bool loaded = false;
 
@@ -35,6 +37,9 @@ namespace Led_Strip_Controller
 
             analyzer = new Analyzer(barL, barR, comboBoxDevice, sliderMult, _devIndex)
             {Enable = true, DisplayEnable = true};
+
+            serial = new SerialStream();
+
             tickTimer.Enabled = true;
 
             sliderR.Value = _fixR;
@@ -49,6 +54,7 @@ namespace Led_Strip_Controller
                     toolStripComboBoxCOMPort.Items.AddRange(new object[] { port });
                 }
                 toolStripComboBoxCOMPort.SelectedIndex = 0;
+                serial.SetPort(toolStripComboBoxCOMPort.Text);
             }
             catch { }
 
@@ -65,6 +71,11 @@ namespace Led_Strip_Controller
             config.Save(ConfigurationSaveMode.Minimal);
         }
 
+        private void ToolStripComboBoxCOMPort_Changed(object sender, EventArgs e)
+        {
+            serial.SetPort(toolStripComboBoxCOMPort.Text);
+        }
+
         double Map(double val, double inMin, double inMax, double outMin, double outMax)
         {
             return outMin + (val - inMin) * (outMax - outMin) / (inMax - inMin);
@@ -72,7 +83,7 @@ namespace Led_Strip_Controller
         
         private void CheckClick(object sender, EventArgs e)
         {
-            CheckBox[] active = new CheckBox[] { checkFixed, checkAudio, checkCustom, checkScroll};
+            CheckBox[] active = new CheckBox[] { checkFixed, checkAudio, checkCustom, checkFade};
 
             CheckBox clicked = sender as CheckBox;
             
@@ -294,17 +305,18 @@ namespace Led_Strip_Controller
             if (_scroll > 360) { _scroll = 0; }
 
             double hue = _scroll;
-            double sat = (double)sliderScrollBri.Value / 100;
+            double sat = (double)fadeScrollBri.Value / 100;
             HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
-            scrollColor.BackColor = Color.FromArgb(red, green, blue);
+            fadeColor.BackColor = Color.FromArgb(red, green, blue);
         }
 
         private void SliderScrollSpeed_Scroll(object sender, EventArgs e)
         {
-            scrollTimer.Interval = sliderScrollSpeed.Value;
+            scrollTimer.Interval = fadeScrollSpeed.Value;
 
         }
+
 
     }
 }
