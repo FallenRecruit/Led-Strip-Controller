@@ -20,8 +20,7 @@ namespace Led_Strip_Controller
         //setup color set
 
         Analyzer analyzer;
-        SerialStream serial;
-
+        //SerialStream serial;
 
         bool loaded = false;
 
@@ -42,7 +41,7 @@ namespace Led_Strip_Controller
             analyzer = new Analyzer(barL, barR, comboBoxDevice, sliderMult, _devIndex)
             {Enable = true, DisplayEnable = true};
 
-            serial = new SerialStream();
+            //serial = new SerialStream();
 
             tickTimer.Enabled = true;
 
@@ -58,7 +57,7 @@ namespace Led_Strip_Controller
                     toolStripComboBoxCOMPort.Items.AddRange(new object[] { port });
                 }
                 toolStripComboBoxCOMPort.SelectedIndex = 0;
-                serial.SetPort(toolStripComboBoxCOMPort.Text);
+                //serial.SetPort(toolStripComboBoxCOMPort.Text);
             }
             catch { }
 
@@ -77,7 +76,7 @@ namespace Led_Strip_Controller
 
         private void ToolStripComboBoxCOMPort_Changed(object sender, EventArgs e)
         {
-            serial.SetPort(toolStripComboBoxCOMPort.Text);
+            //serial.SetPort(toolStripComboBoxCOMPort.Text);
         }
 
         double Map(double val, double inMin, double inMax, double outMin, double outMax)
@@ -222,7 +221,7 @@ namespace Led_Strip_Controller
         private void SetFixed()
         {
             fixedColor.BackColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
-            serial.SetArgb(255,sliderR.Value,sliderG.Value,sliderB.Value);
+            //serial.SetArgb(255,sliderR.Value,sliderG.Value,sliderB.Value);
         }
 
         private void RgbBars(object sender, EventArgs e) { SetFixed(); }
