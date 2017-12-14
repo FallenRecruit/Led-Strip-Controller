@@ -36,7 +36,7 @@ namespace Led_Strip_Controller
         private void _t_Tick(object sender, EventArgs e)
         {
             _port.Open();
-            _port.Write(_a +":"+ _r +":"+ _g +":"+ _b);
+            _port.Write(_a +":"+ _r +":"+ _g +":"+ _b + ":");
             _port.Close();
             
         }

@@ -1,6 +1,6 @@
-int redLedPin = 9;
+int redLedPin = 11;
 int greenLedPin = 10;
-int blueLedPin = 11;
+int blueLedPin = 9;
 
 void setup() 
 {
@@ -17,10 +17,10 @@ void loop()
 {
 String val = Serial.readString(); 
 
-String a = getValue(val, ':', 3);
-String r = getValue(val, ':', 2);
-String g = getValue(val, ':', 1);
-String b = getValue(val, ':', 0);
+String a = getValue(val, ':', 0);
+String r = getValue(val, ':', 1);
+String g = getValue(val, ':', 2);
+String b = getValue(val, ':', 3);
 
 int _a = a.toInt();
 int _r = r.toInt();
