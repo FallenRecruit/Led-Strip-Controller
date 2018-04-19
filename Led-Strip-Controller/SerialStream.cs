@@ -19,7 +19,7 @@ namespace Led_Strip_Controller
         {
             _port = new SerialPort
             {
-                BaudRate = 9600,
+                BaudRate = 57600,
                 DataBits = 8,
                 Parity = Parity.None,
                 StopBits = StopBits.One,

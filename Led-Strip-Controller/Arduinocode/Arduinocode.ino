@@ -1,44 +1,45 @@
-int redLedPin = 11;
-int greenLedPin = 10;
-int blueLedPin = 9;
+String inputString = "";         // a string to hold incoming data
+boolean stringComplete = false;  // whether the string is complete
+String commandString = "";
 
-int incomingByte = 0;
+int led1Pin = 9;
+int led2Pin = 10;
+int led3Pin = 11;
 
-void setup() 
-{
-  Serial.begin(9600);
-  pinMode(redLedPin, OUTPUT);
-  pinMode(greenLedPin, OUTPUT);
-  pinMode(blueLedPin, OUTPUT);
-  analogWrite(redLedPin,255);
-  analogWrite(greenLedPin,255);
-  analogWrite(blueLedPin,255);
+boolean isConnected = false;
+
+void setup() {
+  
+  Serial.begin(57600);
+  pinMode(led1Pin,OUTPUT);
+  pinMode(led2Pin,OUTPUT);
+  pinMode(led3Pin,OUTPUT);
+
 }
 
-void loop() 
-{
-  
-  // read the incoming byte:
-  int incomingByte = Serial.read();
-  if (incomingByte != -1) 
+void loop() {
+
+if(stringComplete)
   {
-    //Serial.flush(); // clear serial port
-    
-    Serial.print(incomingByte);
-    if (incomingByte > 999 && incomingByte < 2000)
-    {
-      int _r = incomingByte - 1000;
-      analogWrite(redLedPin,_r);
-    }
-    else if (incomingByte > 1999 && incomingByte < 3000)
-    {
-      int _g = incomingByte - 2000;
-      analogWrite(greenLedPin,_g);
-    }
-    else if (incomingByte > 2999)
-    {
-      int _b = incomingByte - 3000;
-      analogWrite(blueLedPin,_b);
+    stringComplete = false;
+
+  
+
+  
+    inputString = "";
+  }
+}
+
+void serialEvent() {
+  while (Serial.available()) {
+    // get the new byte:
+    char inChar = (char)Serial.read();
+    // add it to the inputString:
+    inputString += inChar;
+    // if the incoming character is a newline, set a flag
+    // so the main loop can do something about it:
+    if (inChar == '\n') {
+      stringComplete = true;
     }
   }
 }
