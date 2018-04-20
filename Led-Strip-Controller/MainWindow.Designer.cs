@@ -235,6 +235,7 @@
             // 
             // tickTimer
             // 
+            this.tickTimer.Interval = 5;
             this.tickTimer.Tick += new System.EventHandler(this.EventTick);
             // 
             // sliderMult
@@ -786,6 +787,7 @@
             this.MinimumSize = new System.Drawing.Size(923, 569);
             this.Name = "MainWindow";
             this.Text = "LED Controller";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sliderR)).EndInit();

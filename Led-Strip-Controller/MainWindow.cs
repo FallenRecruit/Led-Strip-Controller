@@ -20,12 +20,13 @@ namespace Led_Strip_Controller
         //setup color set
 
         Analyzer analyzer;
-        //SerialStream serial;
+        SerialStream serial;
 
         bool loaded = false;
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
         int _devIndex = Convert.ToInt32(ConfigurationManager.AppSettings["device"]);
+        int _comPort = Convert.ToInt32(ConfigurationManager.AppSettings["Port"]);
         int _fixR = Convert.ToInt32(ConfigurationManager.AppSettings["FixedR"]);
         int _fixG = Convert.ToInt32(ConfigurationManager.AppSettings["FixedG"]);
         int _fixB = Convert.ToInt32(ConfigurationManager.AppSettings["FixedB"]);
@@ -41,7 +42,7 @@ namespace Led_Strip_Controller
             analyzer = new Analyzer(barL, barR, comboBoxDevice, sliderMult, _devIndex)
             {Enable = true, DisplayEnable = true};
 
-            //serial = new SerialStream();
+            serial = new SerialStream();
 
             tickTimer.Enabled = true;
 
@@ -56,8 +57,9 @@ namespace Led_Strip_Controller
                 {
                     toolStripComboBoxCOMPort.Items.AddRange(new object[] { port });
                 }
-                toolStripComboBoxCOMPort.SelectedIndex = 0;
-                //serial.SetPort(toolStripComboBoxCOMPort.Text);
+                toolStripComboBoxCOMPort.SelectedIndex = _comPort;
+                
+                serial.SetPort(toolStripComboBoxCOMPort.Text);
             }
             catch { }
 
@@ -68,6 +70,7 @@ namespace Led_Strip_Controller
         {
             config.AppSettings.Settings.Clear();
             config.AppSettings.Settings.Add("Device", comboBoxDevice.SelectedIndex.ToString());
+            config.AppSettings.Settings.Add("Port", toolStripComboBoxCOMPort.SelectedIndex.ToString());
             config.AppSettings.Settings.Add("FixedR", sliderR.Value.ToString());
             config.AppSettings.Settings.Add("FixedG", sliderG.Value.ToString());
             config.AppSettings.Settings.Add("FixedB", sliderB.Value.ToString());
@@ -76,7 +79,9 @@ namespace Led_Strip_Controller
 
         private void ToolStripComboBoxCOMPort_Changed(object sender, EventArgs e)
         {
-            //serial.SetPort(toolStripComboBoxCOMPort.Text);
+            _comPort = toolStripComboBoxCOMPort.SelectedIndex;
+            serial.SetPort(toolStripComboBoxCOMPort.Text);
+            SaveSettings();
         }
 
         double Map(double val, double inMin, double inMax, double outMin, double outMax)
@@ -221,7 +226,9 @@ namespace Led_Strip_Controller
         private void SetFixed()
         {
             fixedColor.BackColor = Color.FromArgb(sliderR.Value, sliderG.Value, sliderB.Value);
-            //serial.SetArgb(255,sliderR.Value,sliderG.Value,sliderB.Value);
+            //SaveSettings();
+            if (checkFixed.Checked)
+            { serial.SetArgb(255, (Byte)sliderR.Value, (Byte)sliderG.Value, (Byte)sliderB.Value); }
         }
 
         private void RgbBars(object sender, EventArgs e) { SetFixed(); }
@@ -276,7 +283,8 @@ namespace Led_Strip_Controller
             HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
             audioColor.BackColor = Color.FromArgb(red, green, blue);
-            //serial.SetArgb(255,red,green,blue);
+            if (checkAudio.Checked)
+            { serial.SetArgb(255, (Byte)red, (Byte)green, (Byte)blue); }
         }
 
         /// <summary>
@@ -302,9 +310,9 @@ namespace Led_Strip_Controller
         }
 
         /// <summary>
-        /// Code for custom scroll pannel
+        /// Code for Fade pannel
         /// </summary>
-        /// <param name="Custom Pattern"></param>
+        /// <param name="Fade"></param>
 
         private void ScrollTimer_Tick(object sender, EventArgs e)
         {
@@ -317,14 +325,23 @@ namespace Led_Strip_Controller
             HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
             fadeColor.BackColor = Color.FromArgb(red, green, blue);
+            if (checkFade.Checked)
+            { serial.SetArgb(255, (Byte)red, (Byte)green, (Byte)blue); }
         }
 
         private void SliderScrollSpeed_Scroll(object sender, EventArgs e)
         {
             scrollTimer.Interval = fadeScrollSpeed.Value;
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
 
         }
 
-
+        private void OnProcessExit(object sender, EventArgs e)
+        {
+            SaveSettings();
+        }
     }
 }
