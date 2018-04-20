@@ -691,12 +691,12 @@
             // fadeScrollBri
             // 
             this.fadeScrollBri.Location = new System.Drawing.Point(150, 70);
-            this.fadeScrollBri.Maximum = 100;
+            this.fadeScrollBri.Maximum = 255;
             this.fadeScrollBri.Name = "fadeScrollBri";
             this.fadeScrollBri.Size = new System.Drawing.Size(213, 45);
             this.fadeScrollBri.TabIndex = 27;
             this.fadeScrollBri.TickFrequency = 0;
-            this.fadeScrollBri.Value = 100;
+            this.fadeScrollBri.Value = 255;
             // 
             // fadeBrightLabel
             // 

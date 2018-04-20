@@ -26,10 +26,14 @@ namespace Led_Strip_Controller
             _t.IsEnabled = false;
         }
 
-        private void _t_Tick(object sender, EventArgs e)
+        private void _t_Tick(object sender, EventArgs e )
         {
+            string mr, mg, mb;
             _port.Open();
-            _port.WriteAsciiString(Convert.ToString(_r) + "," + Convert.ToString(_g) + "," + Convert.ToString(_b) + '\n');
+            mr = Convert.ToString( Math.Round( Map(_r, 0, 255, 0, _a)));
+            mg = Convert.ToString(Math.Round(Map(_g, 0, 255, 0, _a)));
+            mb = Convert.ToString(Math.Round(Map(_b, 0, 255, 0, _a)));
+            _port.WriteAsciiString(mr + "," + mg + "," + mb + '\n');
             _port.DiscardOutBuffer();
             _port.Close();
 

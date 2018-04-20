@@ -279,12 +279,12 @@ namespace Led_Strip_Controller
         private void Slider()
         {
             double hue = Offset( Map( sliderAmp.Value, 0, ushort.MaxValue, 0, 360));
-            double sat = (double)sliderAudioBri.Value / 100;
+            double sat = (double)Map(sliderAudioBri.Value, 0, 255, 0, 2.5);// 100;
             HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
             audioColor.BackColor = Color.FromArgb(red, green, blue);
             if (checkAudio.Checked)
-            { serial.SetArgb(255, (Byte)red, (Byte)green, (Byte)blue); }
+            { serial.SetArgb((Byte)sliderAudioBri.Value, (Byte)red, (Byte)green, (Byte)blue); }
         }
 
         /// <summary>
@@ -321,12 +321,12 @@ namespace Led_Strip_Controller
             if (_scroll > 360) { _scroll = 0; }
 
             double hue = _scroll;
-            double sat = (double)fadeScrollBri.Value / 100;
+            double sat = (double)Map(fadeScrollBri.Value,0,255,0,100) / 100;
             HsvToRgb(hue, sat, 1.0, out int red, out int green, out int blue);
 
             fadeColor.BackColor = Color.FromArgb(red, green, blue);
             if (checkFade.Checked)
-            { serial.SetArgb(255, (Byte)red, (Byte)green, (Byte)blue); }
+            { serial.SetArgb((Byte)fadeScrollBri.Value, (Byte)red, (Byte)green, (Byte)blue); }
         }
 
         private void SliderScrollSpeed_Scroll(object sender, EventArgs e)
